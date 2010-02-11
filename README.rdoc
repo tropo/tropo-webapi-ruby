@@ -12,6 +12,8 @@ your own web servers.
 * Ruby v1.8.6+ or JRuby v1.4.0+
 * RubyGems
 
+Note: If using with ActiveSupport, v2.3.5 or better of ActiveSupport is required.
+
 == Installation
 
   $ sudo gem install tropo-webapi-ruby
