@@ -212,7 +212,7 @@ describe "Tropo" do
   it "should accept a valid email address when a 'record' action is called" do
     response = Tropo::Generator.record({ :name => 'bar',
                                          :url  => 'foo@bar.com' })
-    response.should == "{\"tropo\":[{\"record\":{\"url\":\"foo@bar.com\",\"name\":\"bar\"}}]}"
+    JSON.parse(response).should == JSON.parse("{\"tropo\":[{\"record\":{\"url\":\"foo@bar.com\",\"name\":\"bar\"}}]}")
   end
   
   # Redirect action tests
