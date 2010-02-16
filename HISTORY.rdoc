@@ -1,5 +1,9 @@
 = Tropo Release History
 
-== Version 0.1.0
+== Version 0.1.5
 
-- Alpha release
+- First public release
+
+== Version 0.1.6
+
+- Added the appropriate ActiveSupport dependency for 'instance_exec' for Ruby 1.8.6 support.
