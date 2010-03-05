@@ -334,12 +334,12 @@ describe "Tropo" do
   
   it "should build a Ruby hash object when a result arrives in JSON" do
     json_result = "{\"result\":{\"sessionId\":\"sessionId\",\"callState\":\"ANSWERED\",\"sessionDuration\":10,\"sequence\":1,\"complete\":true,\"error\":\"error\",\"properties\":[{\"key\":\"foo\",\"value\":\"bar\"},{\"key\":\"charlie\",\"value\":\"foxtrot\"}],\"actions\":{\"name\":\"pin\",\"attempts\":1,\"disposition\":\"SUCCESS\",\"confidence\":100,\"interpretation\":\"12345\",\"utterance\":\"1 2 3 4 5\"}}}"
-    Tropo::Generator.parse(json_result).should == {:result=>{:session_id=>"sessionId", :properties=>{:foo=>{:value=>"bar"}, :charlie=>{:value=>"foxtrot"}}, :complete=>true, :call_state=>"ANSWERED", :actions=>{:pin=>{:disposition=>"SUCCESS", :utterance=>"1 2 3 4 5", :attempts=>1, :interpretation=>"12345", :confidence=>100}}, :session_duration=>10, :error=>"error", :sequence=>1}}
+    Tropo::Generator.parse(json_result).should == Hashie::Mash.new({:result=>{:session_id=>"sessionId", :properties=>{:foo=>{:value=>"bar"}, :charlie=>{:value=>"foxtrot"}}, :complete=>true, :call_state=>"ANSWERED", :actions=>{:pin=>{:disposition=>"SUCCESS", :utterance=>"1 2 3 4 5", :attempts=>1, :interpretation=>"12345", :confidence=>100}}, :session_duration=>10, :error=>"error", :sequence=>1}})
   end
   
   it "should build a ruby hash object when a realworld JSON string arrives" do
     json_result = "{\"result\":{\"sessionId\":\"CCFD9C86-1DD1-11B2-B76D-B9B253E4B7FB@161.253.55.20\",\"callState\":\"ANSWERED\",\"sessionDuration\":2,\"sequence\":1,\"complete\":true,\"error\":null,\"actions\":[{\"name\":\"zip\",\"attempts\":1,\"disposition\":\"SUCCESS\",\"confidence\":100,\"interpretation\":\"12345\",\"utterance\":\"1 2 3 4 5\"},{\"name\":\"days\",\"attempts\":1,\"disposition\":\"SUCCESS\",\"confidence\":100,\"interpretation\":\"1\",\"utterance\":\"1\"}]}}"
-    Tropo::Generator.parse(json_result).should == {:result=>{:call_state=>"ANSWERED", :complete=>true, :actions=>{:zip=>{:disposition=>"SUCCESS", :utterance=>"1 2 3 4 5", :attempts=>1, :interpretation=>"12345", :confidence=>100}, :days=>{:disposition=>"SUCCESS", :utterance=>"1", :attempts=>1, :interpretation=>"1", :confidence=>100}}, :session_duration=>2, :sequence=>1, :session_id=>"CCFD9C86-1DD1-11B2-B76D-B9B253E4B7FB@161.253.55.20", :error=>nil}}
+    Tropo::Generator.parse(json_result).should == Hashie::Mash.new({:result=>{:call_state=>"ANSWERED", :complete=>true, :actions=>{:zip=>{:disposition=>"SUCCESS", :utterance=>"1 2 3 4 5", :attempts=>1, :interpretation=>"12345", :confidence=>100}, :days=>{:disposition=>"SUCCESS", :utterance=>"1", :attempts=>1, :interpretation=>"1", :confidence=>100}}, :session_duration=>2, :sequence=>1, :session_id=>"CCFD9C86-1DD1-11B2-B76D-B9B253E4B7FB@161.253.55.20", :error=>nil}})
   end
   
   it "should see an object delcared outside of a block" do
@@ -409,7 +409,15 @@ describe "Tropo" do
   it "should build a Ruby hash object when a result arrives in JSON with one action returned in an array" do
     json_result = "{\"result\":{\"sessionId\":\"CCFD9C86-1DD1-11B2-B76D-B9B253E4B7FB@161.253.55.20\",\"callState\":\"ANSWERED\",\"sessionDuration\":2,\"sequence\":1,\"complete\":true,\"error\":null,\"actions\":{\"name\":\"zip\",\"attempts\":1,\"disposition\":\"SUCCESS\",\"confidence\":100,\"interpretation\":\"12345\",\"utterance\":\"1 2 3 4 5\"}}}"
     hash = Tropo::Generator.parse(json_result)
-    hash.should == {:result=>{:call_state=>"ANSWERED", :complete=>true, :actions=>{:zip=>{:utterance=>"1 2 3 4 5", :attempts=>1, :interpretation=>"12345", :confidence=>100, :disposition=>"SUCCESS"}}, :session_id=>"CCFD9C86-1DD1-11B2-B76D-B9B253E4B7FB@161.253.55.20", :session_duration=>2, :error=>nil, :sequence=>1}}
+    hash.should == Hashie::Mash.new({:result=>{:call_state=>"ANSWERED", :complete=>true, :actions=>{:zip=>{:utterance=>"1 2 3 4 5", :attempts=>1, :interpretation=>"12345", :confidence=>100, :disposition=>"SUCCESS"}}, :session_id=>"CCFD9C86-1DD1-11B2-B76D-B9B253E4B7FB@161.253.55.20", :session_duration=>2, :error=>nil, :sequence=>1}})
+  end
+  
+  it "should build a Hashie object when a result arrives in JSON" do
+    json_result = "{\"result\":{\"sessionId\":\"CCFD9C86-1DD1-11B2-B76D-B9B253E4B7FB@161.253.55.20\",\"callState\":\"ANSWERED\",\"sessionDuration\":2,\"sequence\":1,\"complete\":true,\"error\":null,\"actions\":{\"name\":\"zip\",\"attempts\":1,\"disposition\":\"SUCCESS\",\"confidence\":100,\"interpretation\":\"12345\",\"utterance\":\"1 2 3 4 5\"}}}"
+    hash = Tropo::Generator.parse(json_result)
+    hash.result.call_state.should == 'ANSWERED'
+    hash[:result][:call_state].should == 'ANSWERED'
+    hash['result']['call_state'].should == 'ANSWERED'
   end
   
   it "should generate valid JSON when a startRecording is used" do

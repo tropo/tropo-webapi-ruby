@@ -7,3 +7,4 @@
 == Version 0.1.6
 
 - Added the appropriate ActiveSupport dependency for 'instance_exec' for Ruby 1.8.6 support.
+- Added a dependency and support for Hashie.

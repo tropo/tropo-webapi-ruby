@@ -161,8 +161,8 @@ module Tropo
 
         array.each_with_index do |ele, i|
           # Set the key to the value of the respresentative key
-          key = ele['key'].to_sym if ele['key']
-          key = ele['name'].to_sym if ele['name']
+          key = ele['key'] if ele['key']
+          key = ele['name'] if ele['name']
         
           # Merge this new key into the hash
           transformed_to_hash.merge!({ key => Hash.new })
@@ -196,16 +196,16 @@ module Tropo
       # @param[String] the key to be decamelized and symobolized
       # @param[Hash] the newly created hash that contins the properly formatted key
       def transform_pair(key, value)
-        hash = { decamelize(key).to_sym => value }
-        hash[:timestamp] = Time.parse(value) if hash[:timestamp]
-        if hash[:actions]
-          if hash[:actions][:name]
-            key_name = hash[:actions][:name]
-            hash[:actions].delete(:name)
-            hash[:actions] = { key_name.to_sym => hash[:actions] }
+        hash = { decamelize(key) => value }
+        hash['timestamp'] = Time.parse(value) if hash['timestamp']
+        if hash['actions']
+          if hash['actions']['name']
+            key_name = hash['actions']['name']
+            hash['actions'].delete('name')
+            hash['actions'] = { key_name => hash['actions'] }
           end
         end
-        set_session_type(hash) if hash[:channel]
+        set_session_type(hash) if hash['channel']
         hash
       end
       
@@ -215,7 +215,7 @@ module Tropo
       # @param[Hash] the key, value pair of the channel 
       # @return nil
       def set_session_type(hash)
-        case hash[:channel]
+        case hash['channel']
         when "VOICE"
           @voice_session = true
           @text_session = false

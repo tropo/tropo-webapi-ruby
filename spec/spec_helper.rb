@@ -2,6 +2,7 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'rubygems'
 require 'tropo-webapi-ruby'
+require 'hashie'
 require 'spec'
 require 'spec/autorun'
 

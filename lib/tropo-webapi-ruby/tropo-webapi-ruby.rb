@@ -186,28 +186,28 @@ module Tropo
     # @param [String] a JSON string
     # @return [Hash] a Hash representing the response from Tropo
     def parse(json_string)
-      response = JSON.parse json_string
-      
+      response = JSON.parse(json_string)
+
       # Check to see what type of response we are working with
       if response['session']
-        transformed_response = { :session => { } }
+        transformed_response = { 'session' => { } }
         
         response['session'].each_pair do |key, value|
           value = transform_hash value if value.kind_of? Hash
-          transformed_response[:session].merge!(transform_pair(key, value))
+          transformed_response['session'].merge!(transform_pair(key, value))
         end
         
       elsif response['result']
-        transformed_response = { :result => { :actions => { } } }
+        transformed_response = { 'result' => { } }
 
         response['result'].each_pair do |key, value|
           value = transform_hash value if value.kind_of? Hash
           value = transform_array value  if value.kind_of? Array
-          transformed_response[:result].merge!(transform_pair(key, value))
+          transformed_response['result'].merge!(transform_pair(key, value))
         end
       end
-      
-      transformed_response
+
+      transformed_response = Hashie::Mash.new(transformed_response)
     end
     
     ##
