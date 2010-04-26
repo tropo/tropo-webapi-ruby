@@ -199,6 +199,12 @@ http://voxeo.github.com/tropo-webapi-ruby
 
 http://docs.tropo.com/webapi/2.0/home.htm
 
+== Notes
+
+In order to maintain compatibility between Ruby MRI and JRuby the gem requires 'json_pure'. If you are using the Ruby MRI and would prefer to use the C version of 'json', simply install the 'json' gem as follows:
+
+  sudo gem install json
+
 == Copyright
 
 Copyright (c) 2010 Voxeo, Corporation. See LICENSE for details.

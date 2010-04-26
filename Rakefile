@@ -13,7 +13,8 @@ begin
     gem.authors = ["Jason Goecke"]
     gem.add_development_dependency "rspec", ">= 1.2.9"
     gem.files.include %w(lib/tropo-webapi-ruby.rb lib/tropo-webapi-ruby/tropo-webapi-ruby.rb lib/tropo-webapi-ruby/tropo-webapi-ruby-helpers.rb LICENSE VERSION README.markdown)
-    gem.add_dependency('json', '>= 1.2.0')
+    #gem.add_dependency('json', '>= 1.2.0')
+    gem.add_dependency('json_pure', '>= 1.2.0')
     gem.add_dependency('hashie', '>= 0.2.0')
     gem.required_ruby_version = '>= 1.8.6'
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
