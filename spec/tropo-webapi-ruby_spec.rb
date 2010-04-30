@@ -484,4 +484,20 @@ describe "Tropo" do
                                        end            
     JSON.parse(tropo).should == hash_result
   end
+  
+  it "should generate a valid JSON string for a record method with a transcription request" do
+    hash_result = {"tropo"=>[{"record"=>{"name"=>"foo", "transcription"=>{"email_format"=>"encoded", "url"=>"mailto:jose@voxeo.com", "id"=>"bling"}, "say"=>[{"value"=>"Please say your account number"}], "beep"=>true, "url"=>"http://sendme.com/tropo", "exitTone"=>"#", "sendTones"=>false, "choices"=>{"value"=>"[5 DIGITS]"}}}]}
+    tropo = Tropo::Generator.record({ :name => 'foo', 
+                                      :url           => 'http://sendme.com/tropo', 
+                                      :beep          => true,
+                                      :send_tones    => false,
+                                      :transcription => { :id           => 'bling',
+                                                          :url          => 'mailto:jose@voxeo.com',
+                                                          :email_format => 'encoded' },
+                                      :exit_tone     => '#' }) do
+                                        say     :value => 'Please say your account number'
+                                        choices :value => '[5 DIGITS]'
+                                      end 
+    JSON.parse(tropo).should == hash_result
+  end
 end

@@ -301,6 +301,7 @@ module Tropo
     #   @option params [optional, String] :format (audio/wav) the audio format to record in, either a wav or mp3
     #   @option params [optional, String] :username if posting to FTP, the username for the FTP server
     #   @option params [optional, String] :password if posting to FTP, the password for the FTP server
+    #   @option params [optional, Hash] :transcription parameters used to transcribe the recording
     # @overload record(params, &block)
     #   @param [Hash] params the options to create a message with.
     #   @param [Block] takes a block so that you may trigger actions, such as a say, on a specific event
@@ -309,6 +310,7 @@ module Tropo
     #   @option params [optional, String] :format (audio/wav) the audio format to record in, either a wav or mp3
     #   @option params [optional, String] :username if posting to FTP, the username for the FTP server
     #   @option params [optional, String] :password if posting to FTP, the password for the FTP server
+    #   @option params [optional, Hash] :transcription parameters used to transcribe the recording
     # @option [String, nil] the JSON string to be passed back to Tropo or nil
     #   if the method has been called from inside a block
     def record(params={}, &block)
