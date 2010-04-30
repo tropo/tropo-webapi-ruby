@@ -465,4 +465,23 @@ describe "Tropo" do
                                                           :password => 'passwd' } })
     JSON.parse(tropo).should == JSON.parse(json_result)
   end
+  
+  it "should generate a valid JSON string for a message method" do
+    hash_result = {"tropo"=>[{"message"=>{"say"=>[{"value"=>"Please say your account number"}], "from"=>"bar", "timeout"=>10, "to"=>"foo", "network"=>"SMS", "answerOnMedia"=>false, "channel"=>"TEXT", "recording"=>{"format"=>"audio/mp3", "method"=>"POST", "url"=>"http://foobar", "username"=>"jose", "password"=>"passwd"}, "headers"=>{"foo"=>"foo", "bar"=>"bar"}}}]}
+    tropo = Tropo::Generator.message({ :to              => 'foo', 
+                                       :from            => 'bar',
+                                       :network         => 'SMS',
+                                       :channel         => 'TEXT',
+                                       :timeout         => 10,
+                                       :answer_on_media => false,
+                                       :headers         => { :foo => 'foo', :bar => 'bar' },
+                                       :recording       => { :url      => 'http://foobar',
+                                                             :method   => 'POST',
+                                                             :format   => 'audio/mp3',
+                                                             :username => 'jose',
+                                                             :password => 'passwd' } }) do
+                                         say     :value => 'Please say your account number'
+                                       end            
+    JSON.parse(tropo).should == hash_result
+  end
 end
