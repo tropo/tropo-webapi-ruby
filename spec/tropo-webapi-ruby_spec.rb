@@ -449,4 +449,20 @@ describe "Tropo" do
     tropo.text_session.should == true
   end
 
+  it "should generate a valid JSON string for a call method" do
+    json_result = "{\"tropo\":[{\"call\":{\"recording\":{\"password\":\"passwd\",\"username\":\"jose\",\"method\":\"POST\",\"url\":\"http://foobar\",\"format\":\"audio/mp3\"},\"timeout\":10,\"network\":\"SMS\",\"channel\":\"TEXT\",\"to\":\"foo\",\"from\":\"bar\",\"headers\":{\"foo\":\"foo\",\"bar\":\"bar\"},\"answerOnMedia\":false}}]}"
+    tropo = Tropo::Generator.call({ :to              => 'foo', 
+                                    :from            => 'bar',
+                                    :network         => 'SMS',
+                                    :channel         => 'TEXT',
+                                    :timeout         => 10,
+                                    :answer_on_media => false,
+                                    :headers         => { :foo => 'foo', :bar => 'bar' },
+                                    :recording       => { :url      => 'http://foobar',
+                                                          :method   => 'POST',
+                                                          :format   => 'audio/mp3',
+                                                          :username => 'jose',
+                                                          :password => 'passwd' } })
+    JSON.parse(tropo).should == JSON.parse(json_result)
+  end
 end

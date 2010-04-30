@@ -73,7 +73,9 @@ module Tropo
       # @return [String] the Ruby string camelized
       def camelize(ruby_string)
         split_string = ruby_string.split('_')
-        split_string[0] + split_string[1].capitalize
+        return_string = split_string[0] + split_string[1].capitalize
+        return_string = return_string + split_string[2].capitalize if split_string[2]
+        return_string
       end
     
       ##
@@ -127,7 +129,7 @@ module Tropo
         params.each_pair do |k,v| 
           if k.to_s.include? "_"
             k = camelize k.to_s
-            k = k.to_sym
+            k = k.to_sym if k
           end
           hash.merge!({ k => v })
         end

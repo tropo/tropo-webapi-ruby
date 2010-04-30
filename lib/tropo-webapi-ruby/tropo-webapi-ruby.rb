@@ -77,6 +77,44 @@ module Tropo
     alias :prompt :ask
     
     ##
+    # Prompts initiates a new call. May only be used when no call is active.
+    #
+    # @overload call(params)
+    #   @param [Hash] params the options to create a call action request with.
+    #   @option params [String] :to the destination of the call, may be a phone number, SMS number or IM address
+    #   @option params [optional, String] :from the phone number or IM address the call will come from
+    #   @option params [optional, String] :network which network the call will be initiated with, such as SMS
+    #   @option params [optional, String] :channel the channel the call will be initiated over, may be TEXT or VOICE
+    #   @option params [optional, Integer] :timeout (30) the amount of time, in seconds, to wait for a response before moving on
+    #   @option params [optional, Boolean] :answer_on_media (true) 
+    #   @options params [optional, Hash] :headers A set of key/values to apply as customer SIP headers to the outgoing call
+    #   @options params [optional, Hash] :recording Refer to the recording method for paramaters in the hash
+    # @overload ask(params, &block)
+    #   @param [Hash] params the options to create an ask action request with.
+    #   @param [Block] takes a block so that you may trigger actions, such as a say, on a specific event
+    #   @option params [String] :to the destination of the call, may be a phone number, SMS number or IM address
+    #   @option params [optional, String] :from the phone number or IM address the call will come from
+    #   @option params [optional, String] :network which network the call will be initiated with, such as SMS
+    #   @option params [optional, String] :channel the channel the call will be initiated over, may be TEXT or VOICE
+    #   @option params [optional, Integer] :timeout (30) the amount of time, in seconds, to wait for a response before moving on
+    #   @option params [optional, Boolean] :answer_on_media (true) 
+    #   @options params [optional, Hash] :headers A set of key/values to apply as customer SIP headers to the outgoing call
+    #   @options params [optional, Hash] :recording Refer to the recording method for paramaters in the hash
+    # @return [String, nil] the JSON string to be passed back to Tropo or nil
+    #   if the method has been called from inside a block
+    def call(params={}, &block)
+      if block_given?
+        create_nested_hash('call', params)
+        instance_exec(&block)
+        @response[:tropo] << @nested_hash
+      else
+        hash = build_action('call', params)
+        @response[:tropo] << hash
+      end
+      render_response if @building.nil?
+    end
+    
+    ##
     # Choices to give the user on input
     #
     # @param [Hash] params the options used to construct the grammar for the user
