@@ -500,4 +500,23 @@ describe "Tropo" do
                                       end 
     JSON.parse(tropo).should == hash_result
   end
+  
+  it "should properly generate a JSON document when calling an ask with says as hash elements rather than as methods" do
+    hash_result = {"tropo"=>[{"ask"=>{"name"=>"donate_to_id", "say"=>[{"event"=>"timeout", "value"=>"Sorry, I did not hear anything."}, {"event"=>"nomatch:1 nomatch:2 nomatch:3", "value"=>"Sorry, that wasn't a valid answer. You can press or say 1 for 'yes', or 2 for 'no'."}, {"value"=>"You chose organization foobar. Are you ready to donate to them? If you say no, I will tell you a little more about the organization."}, {"event"=>"nomatch:3", "value"=>"This is your last attempt."}], "bargein"=>true, "silenceTimeout"=>10, "timeout"=>10, "attempts"=>4, "choices"=>{"value"=>"true(1,yes,sure,affirmative), false(2,no,no thank you,negative), 0(0,help,i do not know, agent, operator, assistance, representative, real person, human), 9(9,quit,stop,shut up)"}}}]}
+    help_stop_choices = "0(0,help,i do not know, agent, operator, assistance, representative, real person, human), 9(9,quit,stop,shut up)"
+    yes_no_choices = "true(1,yes,sure,affirmative), false(2,no,no thank you,negative), " + help_stop_choices
+    
+    t = Tropo::Generator.new
+    t.ask :name => 'donate_to_id', 
+          :bargein => true, 
+          :timeout => 10, 
+          :silence_timeout => 10, 
+          :attempts => 4,
+          :say => [{:event => "timeout", :value => "Sorry, I did not hear anything."},
+                   {:event => "nomatch:1 nomatch:2 nomatch:3", :value => "Sorry, that wasn't a valid answer. You can press or say 1 for 'yes', or 2 for 'no'."},
+                   {:value => "You chose organization foobar. Are you ready to donate to them? If you say no, I will tell you a little more about the organization."},
+                   {:event => "nomatch:3", :value => "This is your last attempt."}],
+                    :choices => { :value => yes_no_choices}
+    JSON.parse(t.response).should == hash_result
+  end
 end
