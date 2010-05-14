@@ -187,7 +187,6 @@ Using the great RESTful Web Services framework Sinatra for Ruby.
 
 ==== Setting a default voice for speech synthesis (text-to-speech/TTS)
 
-  # A reject method
   post '/speak.json' do
     t = Tropo::Generator.new(:voice => 'kate')
     t.say 'Hello!' # Will speak as kate now
@@ -197,6 +196,31 @@ Using the great RESTful Web Services framework Sinatra for Ruby.
     t = Tropo::Generator.new
     t.voice = 'kate'
     t.say 'Hello!' # Will speak as kate now
+  end
+
+==== Setting a default recognizer for speech recognition (ASR)
+
+  post '/ask.json' do
+    t = Tropo::Generator.new(:recognizer => 'fr-fr')
+    t.ask({ :name    => 'account_number', # Will now use the French speech recognition engine
+            :bargein => 'true', 
+            :timeout => 30,
+            :require => 'true' }) do
+              say     :value => "S'il vous plaît dire votre numéro de compte", :voice => 'florence'
+              choices :value => '[5 DIGITS]'
+            end
+
+    # or
+
+    t = Tropo::Generator.new
+    t.recognizer = 'fr-fr'
+    t.ask({ :name    => 'account_number', # Will now use the French speech recognition engine
+            :bargein => 'true', 
+            :timeout => 30,
+            :require => 'true' }) do
+              say     :value => "S'il vous plaît dire votre numéro de compte", :voice => 'florence'
+              choices :value => '[5 DIGITS]'
+            end
   end
 
 === Additional Examples
