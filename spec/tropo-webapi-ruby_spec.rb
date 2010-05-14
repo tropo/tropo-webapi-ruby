@@ -487,7 +487,7 @@ describe "Tropo" do
   
   it "should generate a valid JSON string for a record method with a transcription request" do
     hash_result = {"tropo"=>[{"record"=>{"name"=>"foo", "transcription"=>{"email_format"=>"encoded", "url"=>"mailto:jose@voxeo.com", "id"=>"bling"}, "say"=>[{"value"=>"Please say your account number"}], "beep"=>true, "url"=>"http://sendme.com/tropo", "exitTone"=>"#", "sendTones"=>false, "choices"=>{"value"=>"[5 DIGITS]"}}}]}
-    tropo = Tropo::Generator.record({ :name => 'foo', 
+    tropo = Tropo::Generator.record({ :name          => 'foo', 
                                       :url           => 'http://sendme.com/tropo', 
                                       :beep          => true,
                                       :send_tones    => false,
@@ -518,5 +518,46 @@ describe "Tropo" do
                    {:event => "nomatch:3", :value => "This is your last attempt."}],
                     :choices => { :value => yes_no_choices}
     JSON.parse(t.response).should == hash_result
+  end
+  
+  it "should set the voice variable when called" do
+    t = Tropo::Generator.new
+    t.voice.should == nil
+    
+    t = Tropo::Generator.new(:voice => 'barnie')
+    t.voice.should == 'barnie'
+    
+    t = Tropo::Generator.new
+    t.voice = 'barnie'
+    t.voice.should == 'barnie'
+  end
+  
+  it "should handle the setting of the voice parameter based on defaults" do
+    t = Tropo::Generator.new
+    t.say 'Hi there!'
+    JSON.parse(t.response)['tropo'][0]['say'][0]['voice'].should == nil
+    
+    t = Tropo::Generator.new
+    t.say 'Hi there!', :voice => 'barnie'
+    JSON.parse(t.response)['tropo'][0]['say'][0]['voice'].should == 'barnie'
+    
+    t = Tropo::Generator.new(:voice => 'barnie')
+    t.say 'Hi there!'
+    t.say 'Wow!'
+    JSON.parse(t.response)['tropo'][0]['say'][0]['voice'].should == 'barnie'
+    JSON.parse(t.response)['tropo'][1]['say'][0]['voice'].should == 'barnie'
+
+    t = Tropo::Generator.new(:voice => 'barnie')
+    t.say 'Hi there!'
+    t.say 'Wow!', :voice => 'jack'
+    JSON.parse(t.response)['tropo'][0]['say'][0]['voice'].should == 'barnie'
+    JSON.parse(t.response)['tropo'][1]['say'][0]['voice'].should == 'jack'
+    
+    t = Tropo::Generator.new
+    t.voice = 'barnie'
+    t.say 'Hi there!'
+    t.say 'Wow!', :voice => 'jack'
+    JSON.parse(t.response)['tropo'][0]['say'][0]['voice'].should == 'barnie'
+    JSON.parse(t.response)['tropo'][1]['say'][0]['voice'].should == 'jack'
   end
 end

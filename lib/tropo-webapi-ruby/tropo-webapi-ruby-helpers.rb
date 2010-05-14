@@ -154,6 +154,16 @@ module Tropo
       end
       
       ##
+      # Determines if there is a voice specified, if not set it to the default specified and if not default leave it alone
+      #
+      # @param [Array] the array of values to check if a voice is present
+      # @return [String or nil] Will return the default voice if no voice specified and a default is set
+      def set_voice(params)
+        params.merge!({ :voice => @voice }) if params[:voice].nil? && @voice
+        params
+      end
+      
+      ##
       # Returns an hash from a collapsed array, using the values of 'key' or 'name' as the collpassed hash key
       #
       # @param [Array] the array of values to collapse into a Hash

@@ -4,8 +4,9 @@ module Tropo
     include Tropo::Helpers
     
     ##
-    # Set a couple of Booleans to indicate the session type as a convenience
-    attr_reader :voice_session, :text_session
+    # Set a couple of Booleans to indicate the session type as a convenience as well
+    # as a default voice
+    attr_reader :voice_session, :text_session, :voice
     
     ##
     # Defines the actions on self so that we may call them individually
@@ -23,13 +24,16 @@ module Tropo
     #
     # @overload initialize()
     # @overload initialize(params)
+    #   @param [String] voice sets the value of the default voice
     #   @param [Object] pass in an object that may be accessed inside the block
     # @overload initialize(params, &block)
     #   @param [Object] pass in an object that may be accessed inside the block
+    #   @param [String] voice sets the value of the default voice
     #   @param [Block] a block of code to execute (optional)
     # @return [Object] a new Generator object
-    def initialize(params=nil, &block)
+    def initialize(params={}, &block)
       @response = { :tropo => Array.new }
+      @voice = params[:voice] if params[:voice]
       if block_given?
         # Lets us know were are in the midst of building a block, so we only rendor the JSON
         # response at the end of executing the block, rather than at each action
@@ -157,7 +161,7 @@ module Tropo
     #   @option params [optional, String] :exit_tone whether to play a beep when this user exits a conference
     # @return [String, nil] the JSON string to be passed back to Tropo or nil
     #   if the method has been called from inside a block
-    def conference(params={}, &block)   
+    def conference(params={}, &block)
       if block_given?
         create_nested_hash('conference', params)
         instance_exec(&block)
@@ -414,10 +418,12 @@ module Tropo
 
       if params.kind_of? Array
         params.each do |param|
+          param = set_voice(param)
           hash = build_action('say', param)
           response[:say] << hash
         end
       else
+        params = set_voice(params)
         hash = build_action('say', params)
         response[:say] << hash
       end
@@ -513,5 +519,12 @@ module Tropo
       render_response if @building.nil?
     end
     
+    ##
+    # Sets the default voice for the object
+    #
+    # @param [String] voice the value to set the default voice to
+    def voice=(voice)
+      @voice = voice
+    end
   end
 end
