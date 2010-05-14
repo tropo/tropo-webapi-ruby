@@ -2,56 +2,35 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
   <head>
-    <meta name="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="css/full_list.css" type="text/css" media="screen" charset="utf-8" />
     <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
     <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/full_list.js"></script>
-    <base target="_parent" />
+    <base id="base_target" target="_parent" />
   </head>
   <body>
-    <h1 id="full_list_header">Namespace List</h1>
-    <div id="search">Search: <input type="text" /></div>
-    <div class="clear"></div>
-    <ul id="full_list">
-      
-      
-        <li class="r1 ">
-          
-            <a href="top-level-namespace.html">Top Level Namespace</a>
-          
-          
-        </li>
-      
-        <li class="r2 ">
-          
-            <a title="Generator" href="Tropo/Generator.html">Generator</a> 
-            
-              <small>(Tropo)</small>
-            
-          
-          
-        </li>
-      
-        <li class="r1 ">
-          
-            <a title="Helpers" href="Tropo/Helpers.html">Helpers</a> 
-            
-              <small>(Tropo)</small>
-            
-          
-          
-        </li>
-      
-        <li class="r2 ">
-          
-            <a title="Tropo" href="Tropo.html">Tropo</a> 
-            
-          
-          
-        </li>
-      
-    </ul>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) {
+        document.getElementById('base_target').target = 'main';
+        document.body.className = 'frames';
+      }
+    </script>
+    <div id="content">
+      <h1 id="full_list_header">Class List</h1>
+      <div id="nav">
+        <a target="_self" href="class_list.html">Classes</a> | 
+        <a target="_self" href="method_list.html">Methods</a> |
+        <a target="_self" href="file_list.html">Files</a>
+      </div>
+      <div id="search">Search: <input type="text" /></div>
+
+      <ul id="full_list" class="class">
+        <li><a href="top-level-namespace.html" title=" (root)">Top Level Namespace</a></li>
+<li><a href="Object.html" title="Object (class)">Object</a> &lt; BasicObject<small class='search_info'>Top Level Namespace</small></li><li><a class='toggle'></a> <a href="Tropo.html" title="Tropo (module)">Tropo</a><small class='search_info'>Top Level Namespace</small></li><ul><li><a href="Tropo/Generator.html" title="Tropo::Generator (class)">Generator</a> &lt; Object<small class='search_info'>Tropo</small></li><li><a href="Tropo/Helpers.html" title="Tropo::Helpers (module)">Helpers</a><small class='search_info'>Tropo</small></li></ul>
+
+      </ul>
+    </div>
   </body>
 </html>
 

@@ -2,8 +2,8 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta name="Content-Type" content="text/html; charset=UTF-8" />
-<title>Documentation by YARD 0.4.0</title>
+    <meta name="Content-Type" content="text/html; charset=utf-8" />
+<title>Documentation by YARD 0.5.4</title>
 <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -16,16 +16,22 @@
 
   </head>
   <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
     <div id="header">
       <div id="menu">
   
-    <a title="Index" href="_index.html">Index</a> &raquo; 
+    <a href="_index.html" title="Index">Index</a> &raquo; 
     <span class="title">File: README</span>
   
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
       <div id="search">
-  <a id="class_list_link" href="#">Namespace List</a>
+  <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
   <a id ="file_list_link" href="#">File List</a>
 </div>
@@ -37,7 +43,8 @@
     
     <div id="content"><div id='filecontents'><h1>Tropo Web API Ruby Library</h1>
 <p>
-A Ruby library for interaction with the Tropo Web API using JSON.
+A Ruby library for interaction with the Tropo Web API (http://tropo.com)
+using JSON.
 </p>
 <h2>Tropo Web API Overview</h2>
 <p>
@@ -46,13 +53,17 @@ communications applications from your own web servers.
 </p>
 <h2>Requirements</h2>
 <ul>
-<li>Ruby v1.8.6+ or JRuby v1.4.0+
+<li>Unit tests passed on: Ruby MRI v1.8.6/1.8.7 and JRuby v1.5.0
 
 </li>
 <li>RubyGems
 
 </li>
 </ul>
+<p>
+Note: If using with ActiveSupport, v2.3.5 or better of ActiveSupport is
+required.
+</p>
 <h2>Installation</h2>
 <pre class="code">
   $ <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='tropo identifier id'>tropo</span><span class='minus op'>-</span><span class='webapi identifier id'>webapi</span><span class='minus op'>-</span><span class='ruby identifier id'>ruby</span>
@@ -226,11 +237,76 @@ Using the great RESTful Web Services framework Sinatra for Ruby.
     <span class='Tropo constant id'>Tropo</span><span class='colon2 op'>::</span><span class='Generator constant id'>Generator</span><span class='dot token'>.</span><span class='reject identifier id'>reject</span>
   <span class='end end kw'>end</span>
 </pre>
+<h4>Setting a default voice for speech synthesis (text-to-speech/TTS)</h4>
+<pre class="code">
+  <span class='post identifier id'>post</span> <span class='string val'>'/speak.json'</span> <span class='do do kw'>do</span>
+    <span class='t identifier id'>t</span> <span class='assign token'>=</span> <span class='Tropo constant id'>Tropo</span><span class='colon2 op'>::</span><span class='Generator constant id'>Generator</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:voice</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'kate'</span><span class='rparen token'>)</span>
+    <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='say identifier id'>say</span> <span class='string val'>'Hello!'</span> <span class='comment val'># Will speak as kate now</span>
+
+    <span class='comment val'># or</span>
+
+    <span class='t identifier id'>t</span> <span class='assign token'>=</span> <span class='Tropo constant id'>Tropo</span><span class='colon2 op'>::</span><span class='Generator constant id'>Generator</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+    <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='voice identifier id'>voice</span> <span class='assign token'>=</span> <span class='string val'>'kate'</span>
+    <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='say identifier id'>say</span> <span class='string val'>'Hello!'</span> <span class='comment val'># Will speak as kate now</span>
+  <span class='end end kw'>end</span>
+</pre>
+<h4>Setting a default recognizer for speech recognition (ASR)</h4>
+<pre class="code">
+  <span class='post identifier id'>post</span> <span class='string val'>'/ask.json'</span> <span class='do do kw'>do</span>
+    <span class='t identifier id'>t</span> <span class='assign token'>=</span> <span class='Tropo constant id'>Tropo</span><span class='colon2 op'>::</span><span class='Generator constant id'>Generator</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:recognizer</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'fr-fr'</span><span class='rparen token'>)</span>
+    <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='ask identifier id'>ask</span><span class='lparen token'>(</span><span class='lbrace token'>{</span> <span class='symbol val'>:name</span>    <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'account_number'</span><span class='comma token'>,</span> <span class='comment val'># Will now use the French speech recognition engine</span>
+            <span class='symbol val'>:bargein</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'true'</span><span class='comma token'>,</span>
+            <span class='symbol val'>:timeout</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>30</span><span class='comma token'>,</span>
+            <span class='symbol val'>:require</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'true'</span> <span class='rbrace token'>}</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+              <span class='say identifier id'>say</span>     <span class='symbol val'>:value</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;S'il vous plaît dire votre numéro de compte&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:voice</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'florence'</span>
+              <span class='choices identifier id'>choices</span> <span class='symbol val'>:value</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'[5 DIGITS]'</span>
+            <span class='end end kw'>end</span>
+
+    <span class='comment val'># or</span>
+
+    <span class='t identifier id'>t</span> <span class='assign token'>=</span> <span class='Tropo constant id'>Tropo</span><span class='colon2 op'>::</span><span class='Generator constant id'>Generator</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+    <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='recognizer identifier id'>recognizer</span> <span class='assign token'>=</span> <span class='string val'>'fr-fr'</span>
+    <span class='t identifier id'>t</span><span class='dot token'>.</span><span class='ask identifier id'>ask</span><span class='lparen token'>(</span><span class='lbrace token'>{</span> <span class='symbol val'>:name</span>    <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'account_number'</span><span class='comma token'>,</span> <span class='comment val'># Will now use the French speech recognition engine</span>
+            <span class='symbol val'>:bargein</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'true'</span><span class='comma token'>,</span>
+            <span class='symbol val'>:timeout</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>30</span><span class='comma token'>,</span>
+            <span class='symbol val'>:require</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'true'</span> <span class='rbrace token'>}</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+              <span class='say identifier id'>say</span>     <span class='symbol val'>:value</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;S'il vous plaît dire votre numéro de compte&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:voice</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'florence'</span>
+              <span class='choices identifier id'>choices</span> <span class='symbol val'>:value</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'[5 DIGITS]'</span>
+            <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+</pre>
 <h3>Additional Examples</h3>
 <p>
 May be found by checking out the project from Github, and then looking in
 $PROJECT_HOME/examples and $PROJECT_HOME/spec/tropo-webapi-ruby_spec.rb.
 </p>
+<h3>Documentation</h3>
+<ul>
+<li>API Documentation:
+
+</li>
+</ul>
+<p>
+http://voxeo.github.com/tropo-webapi-ruby
+</p>
+<ul>
+<li>Tropo Web API Documentation
+
+</li>
+</ul>
+<p>
+http://docs.tropo.com/webapi/2.0/home.htm
+</p>
+<h2>Notes</h2>
+<p>
+In order to maintain compatibility between Ruby MRI and JRuby the gem
+requires &#8216;json_pure&#8217;. If you are using the Ruby MRI and would
+prefer to use the C version of &#8216;json&#8217;, simply install the
+&#8216;json&#8217; gem as follows:
+</p>
+<pre class="code">
+  <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='json identifier id'>json</span>
+</pre>
 <h2>Copyright</h2>
 <p>
 Copyright &#169; 2010 Voxeo, Corporation. See LICENSE for details.
@@ -238,9 +314,9 @@ Copyright &#169; 2010 Voxeo, Corporation. See LICENSE for details.
 </div></div>
     
     <div id="footer">
-  Generated on Thu Jan 21 10:38:34 2010 by 
+  Generated on Fri May 14 13:57:01 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.4.0 (ruby-1.8.7).
+  0.5.4 (ruby-1.8.7).
 </div>
 
   </body>

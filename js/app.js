@@ -1,5 +1,5 @@
 function createSourceLinks() {
-    $('#method_details .source_code, #constructor_details .source_code, #method_missing_details .source_code').
+    $('.method_details_list .source_code').
         before("<span class='showSource'>[<a href='#' class='toggleSource'>View source</a>]</span>");
     $('.toggleSource').toggle(function() {
        $(this).parent().next().slideDown(100);
@@ -79,13 +79,33 @@ function toggleSearchFrame(id, link) {
 
 function linkSummaries() {
   $('.summary_signature').click(function() {
-    window.parent.location = $(this).find('a').attr('href');
+    document.location = $(this).find('a').attr('href');
   });
 }
 
+function framesInit() {
+  if (window.top.frames.main) {
+    document.body.className = 'frames';
+    $('#menu .noframes a').attr('href', document.location);
+  }
+}
+
+function keyboardShortcuts() {
+  $(document).keypress(function(evt) {
+    if (evt.altKey || evt.ctrlKey || evt.metaKey || evt.shiftKey) return;
+    switch (evt.charCode) {
+      case 67: case 99:  $('#class_list_link').click(); break;  // 'c'
+      case 77: case 109: $('#method_list_link').click(); break; // 'm'
+      case 70: case 102: $('#file_list_link').click(); break;   // 'f'
+    }
+  });
+}
+
+$(framesInit);
 $(createSourceLinks);
 $(createDefineLinks);
 $(createFullTreeLinks);
 $(fixBoxInfoHeights);
 $(searchFrameLinks);
 $(linkSummaries);
+$(keyboardShortcuts);
