@@ -4,9 +4,10 @@ module Tropo
     include Tropo::Helpers
     
     ##
-    # Set a couple of Booleans to indicate the session type as a convenience as well
-    # as a default voice
-    attr_reader :voice_session, :text_session, :voice
+    # Set a couple of Booleans to indicate the session type as a convenience 
+    # Set a default voice for speech synthesis
+    # Set a default recognizer for speech recognition
+    attr_reader :voice_session, :text_session, :voice, :recognizer
     
     ##
     # Defines the actions on self so that we may call them individually
@@ -34,6 +35,8 @@ module Tropo
     def initialize(params={}, &block)
       @response = { :tropo => Array.new }
       @voice = params[:voice] if params[:voice]
+      @recognizer = params[:recognizer] if params[:recognizer]
+      
       if block_given?
         # Lets us know were are in the midst of building a block, so we only rendor the JSON
         # response at the end of executing the block, rather than at each action
@@ -68,6 +71,7 @@ module Tropo
     # @return [String, nil] the JSON string to be passed back to Tropo or nil
     #   if the method has been called from inside a block
     def ask(params={}, &block)
+      params = set_language(params)
       if block_given?
         create_nested_hash('ask', params)
         instance_exec(&block)
@@ -292,6 +296,14 @@ module Tropo
     end
     
     ##
+    # Sets the default recognizer for the object
+    #
+    # @param [String] recognizer the value to set the default voice to
+    def recognizer=(recognizer)
+      @recognizer = recognizer
+    end
+    
+    ##
     # Plays a prompt (audio file or text to speech) and optionally waits for a response from the caller that is recorded. 
     # If collected, responses may be in the form of DTMF or speech recognition using a simple grammar format defined below. 
     # The record funtion is really an alias of the prompt function, but one which forces the record option to true regardless of how it is (or is not) initially set. 
@@ -418,12 +430,12 @@ module Tropo
 
       if params.kind_of? Array
         params.each do |param|
-          param = set_voice(param)
+          param = set_language(param)
           hash = build_action('say', param)
           response[:say] << hash
         end
       else
-        params = set_voice(params)
+        params = set_language(params)
         hash = build_action('say', params)
         response[:say] << hash
       end

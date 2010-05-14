@@ -144,7 +144,7 @@ module Tropo
       def decamelize(camel_string)
         camel_string.gsub(/[A-Z]/) { |char| '_' + char.downcase }
       end
-    
+      
       ##
       # Formats the @response instance variable to JSON before making it available to the accessor
       #
@@ -154,11 +154,13 @@ module Tropo
       end
       
       ##
-      # Determines if there is a voice specified, if not set it to the default specified and if not default leave it alone
+      # Determines if there is a voice or recognizer specified, if not set it to the default specified and if not default leave it alone
+      # this is for the speech synthesis and speech recognition language to use on a say/ask methods
       #
-      # @param [Array] the array of values to check if a voice is present
-      # @return [String or nil] Will return the default voice if no voice specified and a default is set
-      def set_voice(params)
+      # @params [Hash] the array of values to check if a voice and recognizer are present
+      # @return [Hash] Will return the params with the appropriate voice/recognizer values set
+      def set_language(params)
+        params.merge!({ :recognizer => @recognizer }) if params[:recognizer].nil? && @recognizer
         params.merge!({ :voice => @voice }) if params[:voice].nil? && @voice
         params
       end

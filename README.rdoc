@@ -185,6 +185,20 @@ Using the great RESTful Web Services framework Sinatra for Ruby.
     Tropo::Generator.reject
   end
 
+==== Setting a default voice for speech synthesis (text-to-speech/TTS)
+
+  # A reject method
+  post '/speak.json' do
+    t = Tropo::Generator.new(:voice => 'kate')
+    t.say 'Hello!' # Will speak as kate now
+    
+    # or
+
+    t = Tropo::Generator.new
+    t.voice = 'kate'
+    t.say 'Hello!' # Will speak as kate now
+  end
+
 === Additional Examples
 
 May be found by checking out the project from Github, and then looking in $PROJECT_HOME/examples and $PROJECT_HOME/spec/tropo-webapi-ruby_spec.rb.

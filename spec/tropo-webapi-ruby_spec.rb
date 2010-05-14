@@ -560,4 +560,54 @@ describe "Tropo" do
     JSON.parse(t.response)['tropo'][0]['say'][0]['voice'].should == 'barnie'
     JSON.parse(t.response)['tropo'][1]['say'][0]['voice'].should == 'jack'
   end
+  
+  it "should set the recognizer variable when called" do
+    t = Tropo::Generator.new
+    t.recognizer.should == nil
+    
+    t = Tropo::Generator.new(:recognizer => 'fr-fr')
+    t.recognizer.should == 'fr-fr'
+    
+    t = Tropo::Generator.new
+    t.recognizer = 'fr-fr'
+    t.recognizer.should == 'fr-fr'
+  end
+  
+  it "should handle the setting of the recognizer parameter based on defaults" do
+    t = Tropo::Generator.new
+    t.ask({ :name    => 'foo', 
+            :bargein => 'true', 
+            :timeout => 30,
+            :require => 'true' })
+    JSON.parse(t.response)['tropo'][0]['ask']['recognizer'].should == nil
+    
+    t = Tropo::Generator.new(:recognizer => 'fr-fr')
+    t.ask({ :name    => 'foo', 
+            :bargein => 'true', 
+            :timeout => 30,
+            :require => 'true' })
+    JSON.parse(t.response)['tropo'][0]['ask']['recognizer'].should == 'fr-fr'
+    
+    t = Tropo::Generator.new
+    t.recognizer = 'fr-fr'
+    t.ask({ :name    => 'foo', 
+            :bargein => 'true', 
+            :timeout => 30,
+            :require => 'true' })
+    JSON.parse(t.response)['tropo'][0]['ask']['recognizer'].should == 'fr-fr'
+    
+    t = Tropo::Generator.new
+    t.recognizer = 'fr-fr'
+    t.ask({ :name    => 'foo', 
+            :bargein => 'true', 
+            :timeout => 30,
+            :require => 'true' })
+    t.ask({ :name    => 'foo', 
+            :bargein => 'true', 
+            :timeout => 30,
+            :require => 'true',
+            :recognizer => 'de-de' })
+    JSON.parse(t.response)['tropo'][0]['ask']['recognizer'].should == 'fr-fr'
+    JSON.parse(t.response)['tropo'][1]['ask']['recognizer'].should == 'de-de'
+  end
 end
