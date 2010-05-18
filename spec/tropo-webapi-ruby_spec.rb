@@ -610,4 +610,13 @@ describe "Tropo" do
     JSON.parse(t.response)['tropo'][0]['ask']['recognizer'].should == 'fr-fr'
     JSON.parse(t.response)['tropo'][1]['ask']['recognizer'].should == 'de-de'
   end
+  
+  it "should parse a JSON string or a Ruby Hash the same" do
+    json_session = "{\"session\":{\"id\":\"dih06n\",\"accountId\":\"33932\",\"timestamp\":\"2010-01-19T23:18:48.562Z\",\"userType\":\"HUMAN\",\"to\":{\"id\":\"tropomessaging@bot.im\",\"name\":\"unknown\",\"channel\":\"TEXT\",\"network\":\"JABBER\"},\"from\":{\"id\":\"john_doe@gmail.com\",\"name\":\"unknown\",\"channel\":\"TEXT\",\"network\":\"JABBER\"}}}"
+    tropo = Tropo::Generator.parse json_session
+    tropo.session.user_type.should == 'HUMAN'
+    
+    tropo = Tropo::Generator.parse(JSON.parse(json_session))
+    tropo.session.user_type.should == 'HUMAN'
+  end
 end

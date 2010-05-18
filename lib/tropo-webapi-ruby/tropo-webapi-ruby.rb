@@ -266,12 +266,14 @@ module Tropo
     end
 
     ##
-    # Parses the JSON string recieved from Tropo into a Ruby Hash
+    # Parses the JSON string recieved from Tropo into a Ruby Hash, or 
+    # if already a Ruby Hash parses it with the nicities provided by
+    # the gem
     #
-    # @param [String] a JSON string
-    # @return [Hash] a Hash representing the response from Tropo
-    def parse(json_string)
-      response = JSON.parse(json_string)
+    # @param [String or Hash] a JSON string or a Ruby Hash
+    # @return [Hash] a Hash representing the formatted response from Tropo
+    def parse(response)
+      response = JSON.parse(response) if response.class == String
 
       # Check to see what type of response we are working with
       if response['session']
