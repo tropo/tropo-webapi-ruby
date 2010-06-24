@@ -30,7 +30,7 @@ Optional, if you would like to use with Sinatra:
 
 === Project Developer
 
-  $ sudo gem install yardoc
+  $ sudo gem install yard
 
 From within the project:
 
