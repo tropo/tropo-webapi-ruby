@@ -125,7 +125,7 @@ Using the great RESTful Web Services framework Sinatra for Ruby.
               on :event => 'hangup', :next => '/hangup.json'
               on :event => 'continue', :next => '/answer.json'
               ask({ :name    => 'account_number', 
-                    :bargein => 'true', 
+                    :bargein => true, 
                     :timeout => 30,
                     :require => 'true' }) do
                       say     :value => 'Please say your account number'
@@ -203,7 +203,7 @@ Using the great RESTful Web Services framework Sinatra for Ruby.
   post '/ask.json' do
     t = Tropo::Generator.new(:recognizer => 'fr-fr')
     t.ask({ :name    => 'account_number', # Will now use the French speech recognition engine
-            :bargein => 'true', 
+            :bargein => true, 
             :timeout => 30,
             :require => 'true' }) do
               say     :value => "S'il vous plaît dire votre numéro de compte", :voice => 'florence'
@@ -215,7 +215,7 @@ Using the great RESTful Web Services framework Sinatra for Ruby.
     t = Tropo::Generator.new
     t.recognizer = 'fr-fr'
     t.ask({ :name    => 'account_number', # Will now use the French speech recognition engine
-            :bargein => 'true', 
+            :bargein => true, 
             :timeout => 30,
             :require => 'true' }) do
               say     :value => "S'il vous plaît dire votre numéro de compte", :voice => 'florence'
