@@ -619,4 +619,15 @@ describe "Tropo" do
     tropo = Tropo::Generator.parse(JSON.parse(json_session))
     tropo.session.user_type.should == 'HUMAN'
   end
+  
+  it "should return a hash of the response object" do
+    result = Tropo::Generator.new do
+      say [{ :value => '1234' }, { :value => 'abcd', :event => "nomatch:1" }]
+      say [{ :value => '0987' }, { :value => 'zyxw', :event => "nomatch:2" }]
+    end
+    result.to_hash.should == { :tropo => [{ :say => [{ :value => "1234" }, 
+                                                     { :event => "nomatch:1", :value => "abcd" }] }, 
+                                          { :say => [{ :value => "0987" }, 
+                                                     { :event => "nomatch:2", :value => "zyxw" }] }] }
+  end
 end

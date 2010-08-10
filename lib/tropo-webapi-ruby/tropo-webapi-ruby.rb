@@ -534,6 +534,14 @@ module Tropo
     end
     
     ##
+    # Returns the current hash object of the response, as opposed to JSON
+    #
+    # @return [Hash] the current hash of the response
+    def to_hash
+      @response
+    end
+    
+    ##
     # Sets the default voice for the object
     #
     # @param [String] voice the value to set the default voice to
