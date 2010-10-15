@@ -27,7 +27,7 @@ module Tropo
         when 'record'
           has_params?(params, 'record', ['name', 'url'])
         when 'start_recording'
-          has_params?(params, 'start_recording', ['name', 'url'])
+          has_params?(params, 'start_recording', ['url'])
           
           # Camelcase this one to be Java friendly
           action = 'startRecording'

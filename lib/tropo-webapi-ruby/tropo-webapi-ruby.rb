@@ -475,7 +475,8 @@ module Tropo
       end
       render_response if @building.nil?
     end
-    
+    alias :start_call_recording :start_recording
+
     ##
     # Stops the recording of the current session after startCallRecording has been called
     #
@@ -485,6 +486,7 @@ module Tropo
       @response[:tropo] << { :stopRecording => nil }
       render_response if @building.nil?
     end
+    alias :stop_call_recording :stop_recording
     
     ##
     # Transfers an already answered call to another destination / phone number. 

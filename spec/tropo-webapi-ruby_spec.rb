@@ -285,10 +285,20 @@ describe "Tropo" do
   
   # Start & Stop Recording actions tests
   it "should generate a JSON document with a 'start_recording' action" do
-    response = Tropo::Generator.start_recording(:name => 'recording', :url => 'http://postrecording.com/tropo')
-    JSON.parse(response).should == {"tropo"=>[{"startRecording"=>{"name"=>"recording", "url"=>"http://postrecording.com/tropo"}}]}
+    response = Tropo::Generator.start_recording(:url => 'http://postrecording.com/tropo')
+    JSON.parse(response).should == {"tropo"=>[{"startRecording"=>{"url"=>"http://postrecording.com/tropo"}}]}
   end
   
+  it "should generate a JSON document with a 'start_call_recording' action" do
+    response = Tropo::Generator.start_call_recording(:url => 'http://postrecording.com/tropo')
+    JSON.parse(response).should == {"tropo"=>[{"startRecording"=>{"url"=>"http://postrecording.com/tropo"}}]}
+  end
+
+  it "should generate a JSON document with a 'stopRecording' action" do
+    response = Tropo::Generator.stop_call_recording
+    JSON.parse(response).should == {"tropo"=>[{"stopRecording"=>nil}]}
+  end
+    
   it "should generate a JSON document with a 'stoprecording' action" do
     response = Tropo::Generator.stop_recording
     JSON.parse(response).should == {"tropo"=>[{"stopRecording"=>nil}]}
@@ -426,13 +436,13 @@ describe "Tropo" do
     t.on :event => 'hangup', :next => '/hangup.json' # When a user hangs or call is done. We will want to log some details.
     t.on :event => 'continue', :next => '/next.json'
     t.say "Hello"
-    t.start_recording(:name => 'recording', :url => "http://heroku-voip.marksilver.net/post_audio_to_s3?filename=foo.wav&unique_id=bar")
+    t.start_recording(:url => "http://heroku-voip.marksilver.net/post_audio_to_s3?filename=foo.wav&unique_id=bar")
     # [From this point, until stop_recording(), we will record what the caller *and* the IVR say]
     t.say "You are now on the record."
     # Prompt the user to incriminate themselve on-the-record
     t.say "Go ahead, sing-along."
     t.say "http://denalidomain.com/music/keepers/HappyHappyBirthdaytoYou-Disney.mp3"
-    JSON.parse(t.response).should == {"tropo"=>[{"on"=>{"event"=>"error", "next"=>"/error.json"}}, {"on"=>{"event"=>"hangup", "next"=>"/hangup.json"}}, {"on"=>{"event"=>"continue", "next"=>"/next.json"}}, {"say"=>[{"value"=>"Hello"}]}, {"startRecording"=>{"name"=>"recording", "url"=>"http://heroku-voip.marksilver.net/post_audio_to_s3?filename=foo.wav&unique_id=bar"}}, {"say"=>[{"value"=>"You are now on the record."}]}, {"say"=>[{"value"=>"Go ahead, sing-along."}]}, {"say"=>[{"value"=>"http://denalidomain.com/music/keepers/HappyHappyBirthdaytoYou-Disney.mp3"}]}]}
+    JSON.parse(t.response).should == {"tropo"=>[{"on"=>{"event"=>"error", "next"=>"/error.json"}}, {"on"=>{"event"=>"hangup", "next"=>"/hangup.json"}}, {"on"=>{"event"=>"continue", "next"=>"/next.json"}}, {"say"=>[{"value"=>"Hello"}]}, {"startRecording"=>{"url"=>"http://heroku-voip.marksilver.net/post_audio_to_s3?filename=foo.wav&unique_id=bar"}}, {"say"=>[{"value"=>"You are now on the record."}]}, {"say"=>[{"value"=>"Go ahead, sing-along."}]}, {"say"=>[{"value"=>"http://denalidomain.com/music/keepers/HappyHappyBirthdaytoYou-Disney.mp3"}]}]}
   end
   
   it "should generate a voice_session true if a JSON session is received that is a channel of 'VOICE'" do
