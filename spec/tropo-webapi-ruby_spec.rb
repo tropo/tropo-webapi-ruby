@@ -640,4 +640,12 @@ describe "Tropo" do
                                           { :say => [{ :value => "0987" }, 
                                                      { :event => "nomatch:2", :value => "zyxw" }] }] }
   end
+  
+  it "should not require a name in an ask" do
+    t = Tropo::Generator.new
+    t.ask({ :bargein => 'true', 
+            :timeout => 30,
+            :require => 'true' })
+    JSON.parse(t.response)['tropo'][0]['ask']['timeout'].should == 30
+  end
 end

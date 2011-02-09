@@ -12,8 +12,6 @@ module Tropo
         raise ArgumentError, 'Action requires parameters' if params.nil?
       
         case action
-        when 'ask'
-          has_params?(params, 'ask', 'name')
         when 'choices'
           if params[:mode] 
             if params[:mode] != 'dtmf' && params[:mode] != 'speech'
