@@ -415,7 +415,7 @@ describe "Tropo" do
     hash = Tropo::Generator.parse(json_session)
     hash[:session][:timestamp].should == Time.parse("2010-01-19T23:18:48.562Z")
   end
-  
+
   it "should build a Ruby hash object when a result arrives in JSON with one action returned in an array" do
     json_result = "{\"result\":{\"sessionId\":\"CCFD9C86-1DD1-11B2-B76D-B9B253E4B7FB@161.253.55.20\",\"callState\":\"ANSWERED\",\"sessionDuration\":2,\"sequence\":1,\"complete\":true,\"error\":null,\"actions\":{\"name\":\"zip\",\"attempts\":1,\"disposition\":\"SUCCESS\",\"confidence\":100,\"interpretation\":\"12345\",\"utterance\":\"1 2 3 4 5\"}}}"
     hash = Tropo::Generator.parse(json_result)
@@ -629,7 +629,16 @@ describe "Tropo" do
     tropo = Tropo::Generator.parse(JSON.parse(json_session))
     tropo.session.user_type.should == 'HUMAN'
   end
-  
+
+  it "should correctly parse a Ruby Hash with an instantiated Ruby Time object as timestamp" do
+    json_session = "{\"session\":{\"id\":\"dih06n\",\"accountId\":\"33932\",\"timestamp\":\"2010-01-19T23:18:48.562Z\",\"userType\":\"HUMAN\",\"to\":{\"id\":\"tropomessaging@bot.im\",\"name\":\"unknown\",\"channel\":\"TEXT\",\"network\":\"JABBER\"},\"from\":{\"id\":\"john_doe@gmail.com\",\"name\":\"unknown\",\"channel\":\"TEXT\",\"network\":\"JABBER\"}}}"
+    tropo = JSON.parse(json_session)
+    tropo['session']['timestamp'] = Time.parse("2010-01-19T23:18:48.562Z")
+
+    hash = Tropo::Generator.parse(tropo)
+    hash[:session][:timestamp].should == Time.parse("2010-01-19T23:18:48.562Z")
+  end
+
   it "should return a hash of the response object" do
     result = Tropo::Generator.new do
       say [{ :value => '1234' }, { :value => 'abcd', :event => "nomatch:1" }]

@@ -209,7 +209,7 @@ module Tropo
       # @param[Hash] the newly created hash that contins the properly formatted key
       def transform_pair(key, value)
         hash = { decamelize(key) => value }
-        hash['timestamp'] = Time.parse(value) if hash['timestamp']
+        hash['timestamp'] = Time.parse(value) if hash['timestamp'] and hash['timestamp'].kind_of? String
         if hash['actions']
           if hash['actions']['name']
             key_name = hash['actions']['name']
