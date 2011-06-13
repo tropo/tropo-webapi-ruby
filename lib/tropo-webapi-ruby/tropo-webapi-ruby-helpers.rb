@@ -1,7 +1,7 @@
 module Tropo
   module Helpers
     private
-      
+
       ##
       # Method checks for presence of required elements and then builds the action
       #
@@ -10,10 +10,12 @@ module Tropo
       # @return [Hash] provides the properply built hash for the action
       def build_action(action, params)
         raise ArgumentError, 'Action requires parameters' if params.nil?
-      
+
         case action
+        when 'ask'
+          has_params?(params, 'ask', 'name')
         when 'choices'
-          if params[:mode] 
+          if params[:mode]
             if params[:mode] != 'dtmf' && params[:mode] != 'speech'
               raise ArgumentError, "If mode is provided, only 'dtmf', 'speech' or 'any' is supported"
             end
@@ -26,7 +28,7 @@ module Tropo
           has_params?(params, 'record', ['name', 'url'])
         when 'start_recording'
           has_params?(params, 'start_recording', ['url'])
-          
+
           # Camelcase this one to be Java friendly
           action = 'startRecording'
         when 'redirect'
@@ -38,14 +40,14 @@ module Tropo
         when 'transfer'
           has_params?(params, 'transfer', 'to')
         end
-      
+
         if action == 'on'
           build_elements(params)
         else
           { action.to_sym => build_elements(params) }
         end
       end
-      
+
       ##
       # Checks to see if certain parameters are present, and if not raises an error
       #
@@ -64,7 +66,7 @@ module Tropo
           raise ArgumentError, "A '#{names}' must be provided to a '#{action}' action" if params[names.to_sym].nil?
         end
       end
-      
+
       # Takes a Ruby underscore string and converts to a Java friendly camelized string
       #
       # @param [String] the string to be camelized
@@ -75,7 +77,7 @@ module Tropo
         return_string = return_string + split_string[2].capitalize if split_string[2]
         return_string
       end
-    
+
       ##
       # Creates a nested hash when we have block within a block
       #
@@ -97,7 +99,7 @@ module Tropo
         @nested_on_hash_cnt ||= 0
         @nested_on_hash[:on] << params
       end
-          
+
       ##
       # Creates an on_hash for the on action
       #
@@ -105,7 +107,7 @@ module Tropo
       def create_on_hash
         @on_hash ||= { :on => Array.new }
       end
-      
+
       ##
       # Method builds the elements for each of the actions
       #
@@ -122,9 +124,9 @@ module Tropo
             end
           end
         end
-      
+
         hash = Hash.new
-        params.each_pair do |k,v| 
+        params.each_pair do |k,v|
           if k.to_s.include? "_"
             k = camelize k.to_s
             k = k.to_sym if k
@@ -133,7 +135,7 @@ module Tropo
         end
         hash
       end
-    
+
       ##
       # Takes a Java Camelized string and converts to an underscore string
       #
@@ -142,7 +144,7 @@ module Tropo
       def decamelize(camel_string)
         camel_string.gsub(/[A-Z]/) { |char| '_' + char.downcase }
       end
-      
+
       ##
       # Formats the @response instance variable to JSON before making it available to the accessor
       #
@@ -150,7 +152,7 @@ module Tropo
       def render_response
         @response.to_json
       end
-      
+
       ##
       # Determines if there is a voice or recognizer specified, if not set it to the default specified and if not default leave it alone
       # this is for the speech synthesis and speech recognition language to use on a say/ask methods
@@ -162,7 +164,7 @@ module Tropo
         params.merge!({ :voice => @voice }) if params[:voice].nil? && @voice
         params
       end
-      
+
       ##
       # Returns an hash from a collapsed array, using the values of 'key' or 'name' as the collpassed hash key
       #
@@ -175,10 +177,10 @@ module Tropo
           # Set the key to the value of the respresentative key
           key = ele['key'] if ele['key']
           key = ele['name'] if ele['name']
-        
+
           # Merge this new key into the hash
           transformed_to_hash.merge!({ key => Hash.new })
-        
+
           # Then add the corresponding key/values to this new hash
           ele.each_pair do |k, v|
             if k != 'key' && k != 'name'
@@ -209,7 +211,7 @@ module Tropo
       # @param[Hash] the newly created hash that contins the properly formatted key
       def transform_pair(key, value)
         hash = { decamelize(key) => value }
-        hash['timestamp'] = Time.parse(value) if hash['timestamp']
+        hash['timestamp'] = Time.parse(value) if hash['timestamp'] && (! hash['timestamp'].is_a?(Time))
         if hash['actions']
           if hash['actions']['name']
             key_name = hash['actions']['name']
@@ -220,11 +222,11 @@ module Tropo
         set_session_type(hash) if hash['channel']
         hash
       end
-      
+
       ##
       # Sets the session type instance variables of voice_session and text_session
       #
-      # @param[Hash] the key, value pair of the channel 
+      # @param[Hash] the key, value pair of the channel
       # @return nil
       def set_session_type(hash)
         case hash['channel']
