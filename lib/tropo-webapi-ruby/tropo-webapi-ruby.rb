@@ -56,6 +56,7 @@ module Tropo
     #   @option params [String] :name the name to assign to the result when returned to the application, default is true
     #   @option params [optional, Integer] :attempts (1) the number of times to prompt the user for input
     #   @option params [optional, Boolean] :bargein (true) allows a user to enter a key to stop the ask action
+    #   @option params [optional, Integer] :interdigit_timeout (nil) defines how long to wait between key presses to determine the user has stopped entering input
     #   @option params [optional, Float] :min_confidence (.5) the minimum confidence by which to accept the response expressed from 0-1, as opposed to asking again
     #   @option params [optional, Boolean] :required (true) if this is a field that must be completed by the user
     #   @option params [optional, Integer] :timeout (30) the amount of time, in seconds, to wait for a response before moving on
@@ -65,6 +66,7 @@ module Tropo
     #   @option params [String] :name the name to assign to the result when returned to the application
     #   @option params [optional, Integer] :attempts (1) the number of times to prompt the user for input
     #   @option params [optional, Boolean] :bargein (true) allows a user to enter a key to stop the ask action
+    #   @option params [optional, Integer] :interdigit_timeout (nil) defines how long to wait between key presses to determine the user has stopped entering input
     #   @option params [optional, Float] :min_confidence (.5) the minimum confidence by which to accept the response expressed from 0-1, as opposed to asking again
     #   @option params [optional, Boolean] :required (true) if this is a field that must be completed by the user
     #   @option params [optional, Integer] :timeout (30) the amount of time, in seconds, to wait for a response before moving on
@@ -150,6 +152,7 @@ module Tropo
     #   @param [Hash] params the options to create a message with.
     #   @option params [String] :name the name to assign to the conference room and to identify events back to the application
     #   @option params [Integer] :id the number to assign to the conference room
+    #   @option params [optional, Integer] :interdigit_timeout (nil) defines how long to wait between key presses to determine the user has stopped entering input
     #   @option params [optional, Boolean] :mute (false) whether to mute this caller in the conference
     #   @option params [optional, Integer] :max_time the maximum time, in seconds, to allow this user to stay in conference
     #   @option params [optional, Integer] :send_tones whether to send the DTMF a user may enter to the audio of the conference
@@ -159,6 +162,7 @@ module Tropo
     #   @param [Block] takes a block so that you may trigger actions, such as a say, on a specific event
     #   @option params [String] :name the name to assign to the conference room and to identify events back to the application
     #   @option params [Integer] :id the number to assign to the conference room
+    #   @option params [optional, Integer] :interdigit_timeout (nil) defines how long to wait between key presses to determine the user has stopped entering input
     #   @option params [optional, Boolean] :mute (false) whether to mute this caller in the conference
     #   @option params [optional, Integer] :max_time the maximum time, in seconds, to allow this user to stay in conference
     #   @option params [optional, Integer] :send_tones whether to send the DTMF a user may enter to the audio of the conference
@@ -320,6 +324,7 @@ module Tropo
     #   @option params [optional, String] :username if posting to FTP, the username for the FTP server
     #   @option params [optional, String] :password if posting to FTP, the password for the FTP server
     #   @option params [optional, Hash] :transcription parameters used to transcribe the recording
+    #   @option params [optional, Integer] :interdigit_timeout (nil) defines how long to wait between key presses to determine the user has stopped entering input
     # @overload record(params, &block)
     #   @param [Hash] params the options to create a message with.
     #   @param [Block] takes a block so that you may trigger actions, such as a say, on a specific event
@@ -329,6 +334,7 @@ module Tropo
     #   @option params [optional, String] :username if posting to FTP, the username for the FTP server
     #   @option params [optional, String] :password if posting to FTP, the password for the FTP server
     #   @option params [optional, Hash] :transcription parameters used to transcribe the recording
+    #   @option params [optional, Integer] :interdigit_timeout (nil) defines how long to wait between key presses to determine the user has stopped entering input
     # @option [String, nil] the JSON string to be passed back to Tropo or nil
     #   if the method has been called from inside a block
     def record(params={}, &block)
@@ -512,7 +518,8 @@ module Tropo
     #   @option params [optional, Boolean] :required (true) ???
     #   @option params [required, String] :to where to redirect the session to
     #   @option params [optional, String] :from set the from id for the session when redirecting
-    #   @option params [optional, Integer] :ring_repeat ???
+    #   @option params [optional, Integer] :interdigit_timeout (nil) defines how long to wait between key presses to determine the user has stopped entering input
+    #   @option params [optional, Integer] :ring_repeat This specifies the number of times the audio file specified in the ring event will repeat itself.
     # @overload transfer(params, &block)
     #   @param [Hash] params the options to create a transfer action request with
     #   @option params [String] :name the name to assign to the result when returned to the application, default is true
@@ -521,7 +528,8 @@ module Tropo
     #   @option params [optional, Boolean] :required (true) ???
     #   @option params [required, String] :to where to redirect the session to
     #   @option params [optional, String] :from set the from id for the session when redirecting
-    #   @option params [optional, Integer] :ring_repeat ???
+    #   @option params [optional, Integer] :interdigit_timeout (nil) defines how long to wait between key presses to determine the user has stopped entering input
+    #   @option params [optional, Integer] :ring_repeat This specifies the number of times the audio file specified in the ring event will repeat itself.
     # @return [nil, String]
     def transfer(params={}, &block)
       if block_given?
