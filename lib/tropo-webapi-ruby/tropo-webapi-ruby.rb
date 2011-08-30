@@ -53,23 +53,33 @@ module Tropo
     #
     # @overload ask(params)
     #   @param [Hash] params the options to create an ask action request with.
-    #   @option params [String] :name the name to assign to the result when returned to the application, default is true
+    #   @option params [required, String] :choices indicates the structure of the expected data and acceptable modes of input - value, mode, terminator
+    #   @option params [optional, String] :say determines what is played or sent to the caller - also takes an event key to determine if prompt will be played based on a nomatch or timeout
+    #   @option params [optional, String or Array] :allow_signals allows you to assign a signal to ask which can be used with REST to interrupt the function 
+    #   @option params [optional, String] :name this is the key used to identify the result of an operation, so you can differentiate between multiple results
     #   @option params [optional, Integer] :attempts (1) the number of times to prompt the user for input
-    #   @option params [optional, Boolean] :bargein (true) allows a user to enter a key to stop the ask action
+    #   @option params [optional, Boolean] :bargein (true) allows a user to say or enter a key to stop the prompt from playing further
     #   @option params [optional, Integer] :interdigit_timeout (nil) defines how long to wait between key presses to determine the user has stopped entering input
-    #   @option params [optional, Float] :min_confidence (.5) the minimum confidence by which to accept the response expressed from 0-1, as opposed to asking again
-    #   @option params [optional, Boolean] :required (true) if this is a field that must be completed by the user
+    #   @option params [optional, Integer] :min_confidence (30) the minimum confidence by which to accept the response, as opposed to asking again
+    #   @option params [optional, Boolean] :required (true) determines whether Tropo should move on to the next verb - if true, Tropo will only move on if the current operation completed
     #   @option params [optional, Integer] :timeout (30) the amount of time, in seconds, to wait for a response before moving on
+    #   @option params [optional, String] :recognizer this tells Tropo what language to listen for
+    #   @option params [optional, String] :voice (allison) specifies the voice to be used when speaking text to a user
     # @overload ask(params, &block)
     #   @param [Hash] params the options to create an ask action request with.
     #   @param [Block] takes a block so that you may trigger actions, such as a say, on a specific event
-    #   @option params [String] :name the name to assign to the result when returned to the application
+    #   @option params [required, String] :choices indicates the structure of the expected data and acceptable modes of input - value, mode, terminator
+    #   @option params [optional, String] :say determines what is played or sent to the caller - also takes an event key to determine if prompt will be played based on a nomatch or timeout
+    #   @option params [optional, String or Array] :allow_signals allows you to assign a signal to ask which can be used with REST to interrupt the function
+    #   @option params [optional, String] :name this is the key used to identify the result of an operation, so you can differentiate between multiple results
     #   @option params [optional, Integer] :attempts (1) the number of times to prompt the user for input
-    #   @option params [optional, Boolean] :bargein (true) allows a user to enter a key to stop the ask action
+    #   @option params [optional, Boolean] :bargein (true) allows a user to say or enter a key to stop the prompt from playing further
     #   @option params [optional, Integer] :interdigit_timeout (nil) defines how long to wait between key presses to determine the user has stopped entering input
-    #   @option params [optional, Float] :min_confidence (.5) the minimum confidence by which to accept the response expressed from 0-1, as opposed to asking again
-    #   @option params [optional, Boolean] :required (true) if this is a field that must be completed by the user
+    #   @option params [optional, Integer] :min_confidence (30) the minimum confidence by which to accept the response, as opposed to asking again
+    #   @option params [optional, Boolean] :required (true) determines whether Tropo should move on to the next verb - if true, Tropo will only move on if the current operation completed
     #   @option params [optional, Integer] :timeout (30) the amount of time, in seconds, to wait for a response before moving on
+    #   @option params [optional, String] :recognizer this tells Tropo what language to listen for
+    #   @option params [optional, String] :voice (allison) specifies the voice to be used when speaking text to a user
     # @return [String, nil] the JSON string to be passed back to Tropo or nil
     #   if the method has been called from inside a block
     def ask(params={}, &block)
@@ -91,25 +101,31 @@ module Tropo
     #
     # @overload call(params)
     #   @param [Hash] params the options to create a call action request with.
+    #   @option params [optional, String] :name this is the key used to identify the result of an operation, so you can differentiate between multiple results
     #   @option params [String] :to the destination of the call, may be a phone number, SMS number or IM address
     #   @option params [optional, String] :from the phone number or IM address the call will come from
     #   @option params [optional, String] :network which network the call will be initiated with, such as SMS
     #   @option params [optional, String] :channel the channel the call will be initiated over, may be TEXT or VOICE
     #   @option params [optional, Integer] :timeout (30) the amount of time, in seconds, to wait for a response before moving on
-    #   @option params [optional, Boolean] :answer_on_media (true) 
+    #   @option params [optional, Boolean] :answer_on_media (false) if true, the call will be concisdered answered and audio will being playing as soon as media is received (ringing, busy, etc)
     #   @options params [optional, Hash] :headers A set of key/values to apply as customer SIP headers to the outgoing call
-    #   @options params [optional, Hash] :recording Refer to the recording method for paramaters in the hash
-    # @overload ask(params, &block)
+    #   @options params [optional, Hash] :recording allow you to start call recording as soon as the call is answered; refer to the recording method for paramaters in the hash
+    #   @option params [optional, Boolean] :required (true) determines whether Tropo should move on to the next verb - if true, Tropo will only move on if the current operation completed
+    #   @option params [optional, String or Array] :allow_signals allows you to assign a signal to call which can be used with REST to interrupt the function 
+    # @overload call(params, &block)
     #   @param [Hash] params the options to create an message action request with.
     #   @param [Block] takes a block so that you may trigger actions, such as a say, on a specific event
+    #   @option params [optional, String] :name this is the key used to identify the result of an operation, so you can differentiate between multiple results
     #   @option params [String] :to the destination of the call, may be a phone number, SMS number or IM address
     #   @option params [optional, String] :from the phone number or IM address the call will come from
     #   @option params [optional, String] :network which network the call will be initiated with, such as SMS
-    #   @option params [optional, String] :channel the channel the call will be initiated over, may be TEXT or VOICE
+    #   @option params [optional, String] :channel (voice) the channel the call will be initiated over, may be TEXT or VOICE
     #   @option params [optional, Integer] :timeout (30) the amount of time, in seconds, to wait for a response before moving on
-    #   @option params [optional, Boolean] :answer_on_media (true) 
+    #   @option params [optional, Boolean] :answer_on_media (false) if true, the call will be concisdered answered and audio will being playing as soon as media is received (ringing, busy, etc)
     #   @options params [optional, Hash] :headers A set of key/values to apply as customer SIP headers to the outgoing call
-    #   @options params [optional, Hash] :recording Refer to the recording method for paramaters in the hash
+    #   @options params [optional, Hash] :recording allow you to start call recording as soon as the call is answered; refer to the recording method for paramaters in the hash
+    #   @option params [optional, Boolean] :required (true) determines whether Tropo should move on to the next verb - if true, Tropo will only move on if the current operation completed
+    #   @option params [optional, String or Array] :allow_signals allows you to assign a signal to call which can be used with REST to interrupt the function 
     # @return [String, nil] the JSON string to be passed back to Tropo or nil
     #   if the method has been called from inside a block
     def call(params={}, &block)
@@ -128,10 +144,9 @@ module Tropo
     # Choices to give the user on input
     #
     # @param [Hash] params the options used to construct the grammar for the user
-    # @option params [String] :value the name to assign to the result when returned to the app
+    # @option params [String] :value this is the grammar which determines the type of expected data, such as [DIGITS]
     # @option params [optional, String] :mode (ANY) the mode to use when asking the user [DTMF, SPEECH or ANY]
-    # @option params [optional, String] :term_char the user may enter a keypad entry to stop the request
-    # @option params [optional, String] :type (simple/grammar) the type of grammar to use
+    # @option params [optional, String] :terminator (#) the user may enter a keypad entry to stop the request
     # @option [String, nil] the JSON string to be passed back to Tropo or nil
     #   if the method has been called from inside a block
     def choices(params={})
@@ -150,23 +165,25 @@ module Tropo
     #
     # @overload conference(params)
     #   @param [Hash] params the options to create a message with.
-    #   @option params [String] :name the name to assign to the conference room and to identify events back to the application
-    #   @option params [Integer] :id the number to assign to the conference room
+    #   @option params [optional, String] :name this is the key used to identify the result of an operation, so you can differentiate between multiple results
+    #   @option params [required, Integer] :id the number to assign to the conference room
     #   @option params [optional, Integer] :interdigit_timeout (nil) defines how long to wait between key presses to determine the user has stopped entering input
     #   @option params [optional, Boolean] :mute (false) whether to mute this caller in the conference
-    #   @option params [optional, Integer] :max_time the maximum time, in seconds, to allow this user to stay in conference
-    #   @option params [optional, Integer] :send_tones whether to send the DTMF a user may enter to the audio of the conference
-    #   @option params [optional, String] :exit_tone whether to play a beep when this user exits a conference
+    #   @option params [optional, Integer] :play_tones whether to allow the DTMF input from a user to play into the conference
+    #   @option params [optional, String] :terminator this is the touch-tone key (DTMF) used to exit the conference
+    #   @option params [optional, Boolean] :required (true) determines whether Tropo should move on to the next verb - if true, Tropo will only move on if the current operation completed
+    #   @option params [optional, String or Array] :allow_signals allows you to assign a signal to conference which can be used with REST to interrupt the function 
     # @overload conference(params, &block)
     #   @param [Hash] params the options to create a message with.
     #   @param [Block] takes a block so that you may trigger actions, such as a say, on a specific event
-    #   @option params [String] :name the name to assign to the conference room and to identify events back to the application
+    #   @option params [optional, String] :name this is the key used to identify the result of an operation, so you can differentiate between multiple results
     #   @option params [Integer] :id the number to assign to the conference room
     #   @option params [optional, Integer] :interdigit_timeout (nil) defines how long to wait between key presses to determine the user has stopped entering input
     #   @option params [optional, Boolean] :mute (false) whether to mute this caller in the conference
-    #   @option params [optional, Integer] :max_time the maximum time, in seconds, to allow this user to stay in conference
-    #   @option params [optional, Integer] :send_tones whether to send the DTMF a user may enter to the audio of the conference
-    #   @option params [optional, String] :exit_tone whether to play a beep when this user exits a conference
+    #   @option params [optional, Integer] :play_tones whether to allow the DTMF input from a user to play into the conference
+    #   @option params [optional, String] :terminator this is the touch-tone key (DTMF) used to exit the conference
+    #   @option params [optional, Boolean] :required (true) determines whether Tropo should move on to the next verb - if true, Tropo will only move on if the current operation completed
+    #   @option params [optional, String or Array] :allow_signals allows you to assign a signal to conference which can be used with REST to interrupt the function 
     # @return [String, nil] the JSON string to be passed back to Tropo or nil
     #   if the method has been called from inside a block
     def conference(params={}, &block)
@@ -187,7 +204,13 @@ module Tropo
     # May trigger these events:
     #   - hangup
     #   - error
-    #
+    # @overload hangup(params)
+    #   @param [Hash] params the options to create a message action request with.
+    #   @option params [String] :headers contains the Session Initiation Protocol (SIP) Headers for the current session.
+    # @overload hangup(params, &block)
+    #   @param [Hash] params the options to create an message action request with.
+    #   @param [Block] takes a block so that you may trigger actions, such as a say, on a specific event
+    #   @option params [String] :headers contains the Session Initiation Protocol (SIP) Headers for the current session.
     # @return [String, nil] returns the JSON string to hangup/stop the current session or nil
     #   if the method has been called from inside a block
     def hangup
@@ -202,25 +225,29 @@ module Tropo
     #
     # @overload message(params)
     #   @param [Hash] params the options to create a message action request with.
-    #   @option params [String] :to the destination of the call, may be a phone number, SMS number or IM address
+    #   @option params [optional, String] :name this is the key used to identify the result of an operation, so you can differentiate between multiple results
+    #   @option params [required, String] :say determines what is played or sent to the caller
+    #   @option params [optional, String] :voice (allison) specifies the voice to be used when speaking text to a user
+    #   @option params [required, String] :to the destination of the call, may be a phone number, SMS number or IM address
     #   @option params [optional, String] :from the phone number or IM address the call will come from
     #   @option params [optional, String] :network which network the call will be initiated with, such as SMS
     #   @option params [optional, String] :channel the channel the call will be initiated over, may be TEXT or VOICE
     #   @option params [optional, Integer] :timeout (30) the amount of time, in seconds, to wait for a response before moving on
-    #   @option params [optional, Boolean] :answer_on_media (true) 
-    #   @options params [optional, Hash] :headers A set of key/values to apply as customer SIP headers to the outgoing call
-    #   @options params [optional, Hash] :recording Refer to the recording method for paramaters in the hash
-    # @overload ask(params, &block)
+    #   @option params [optional, Boolean] :required (true) determines whether Tropo should move on to the next verb - if true, Tropo will only move on if the current operation completed
+    #   @option params [optional, Boolean] :answer_on_media (false) if true, the call will be concisdered answered and audio will being playing as soon as media is received (ringing, busy, etc)
+    # @overload message(params, &block)
     #   @param [Hash] params the options to create an message action request with.
     #   @param [Block] takes a block so that you may trigger actions, such as a say, on a specific event
-    #   @option params [String] :to the destination of the call, may be a phone number, SMS number or IM address
+    #   @option params [optional, String] :name this is the key used to identify the result of an operation, so you can differentiate between multiple results
+    #   @option params [required, String] :say determines what is played or sent to the caller
+    #   @option params [optional, String] :voice (allison) specifies the voice to be used when speaking text to a user
+    #   @option params [required, String] :to the destination of the call, may be a phone number, SMS number or IM address
     #   @option params [optional, String] :from the phone number or IM address the call will come from
     #   @option params [optional, String] :network which network the call will be initiated with, such as SMS
     #   @option params [optional, String] :channel the channel the call will be initiated over, may be TEXT or VOICE
     #   @option params [optional, Integer] :timeout (30) the amount of time, in seconds, to wait for a response before moving on
-    #   @option params [optional, Boolean] :answer_on_media (true) 
-    #   @options params [optional, Hash] :headers A set of key/values to apply as customer SIP headers to the outgoing call
-    #   @options params [optional, Hash] :recording Refer to the recording method for paramaters in the hash
+    #   @option params [optional, Boolean] :required (true) determines whether Tropo should move on to the next verb - if true, Tropo will only move on if the current operation completed
+    #   @option params [optional, Boolean] :answer_on_media (false) if true, the call will be concisdered answered and audio will being playing as soon as media is received (ringing, busy, etc)
     # @return [String, nil] the JSON string to be passed back to Tropo or nil
     #   if the method has been called from inside a block
     def message(params={}, &block)
@@ -240,13 +267,15 @@ module Tropo
     #
     # @overload initialize(params)
     #   @param [Hash] params the options to create a message with.
-    #   @option params [String] :event the event name that should trigger the callback
-    #   @option params [String] :next the resource to send the callback to, such as '/error.json'
+    #   @option params [required, String] :event the event name that should trigger the callback
+    #   @option params [optional, String] :next the resource to send the callback to, such as '/error.json'
+    #   @option params [optional, String] :say determines what is played or sent to the caller
     # @overload initialize(params, &block)
     #   @param [Hash] params the options to create a message with.
-    #   @option params [String] :event the event name that should trigger the callback
-    #   @option params [String] :next the resource to send the callback to, such as '/error.json'
     #   @param [Block] takes a block so that you may trigger actions, such as a say, on a specific event
+    #   @option params [required, String] :event the event name that should trigger the callback
+    #   @option params [optional, String] :next the resource to send the callback to, such as '/error.json'
+    #   @option params [optional, String] :say determines what is played or sent to the caller
     # @option [String, nil] the JSON string to be passed back to Tropo or nil
     #   if the method has been called from inside a block
     def on(params={}, &block)
@@ -318,22 +347,48 @@ module Tropo
     #
     # @overload record(params)
     #   @param [Hash] params the options to create a message with.
-    #   @option params [String] :name the event name that should trigger the callback
-    #   @option params [String] :url a valid URI, an HTTP, FTP or email address to POST the recording file to
+    #   @option params [optional, Integer] :attempts (1) the number of times to prompt the user for input
+    #   @option params [optional, String or Array] :allow_signals allows you to assign a signal to record which can be used with REST to interrupt the function 
+    #   @option params [optional, Boolean] :bargein (true) allows a user to say or enter a key to stop the prompt from playing further
+    #   @option params [optional, Boolean] :beep (true) when true, callers will hear a tone indicating the recording has begun
+    #   @option params [optional, String] :choices when used with record, this defines the terminator
+    #   @option params [required, String] :say determines what is played or sent to the caller
+    #   @option params [optional, String] :voice (allison) specifies the voice to be used when speaking text to a user
     #   @option params [optional, String] :format (audio/wav) the audio format to record in, either a wav or mp3
+    #   @option params [optional, Float] :max_silence (5.0) the max amount of time in seconds to wait for silence before considering the user finished speaking
+    #   @option params [optional, Float] :max_time (30.0) the max amount of time in seconds the user is allotted for input
+    #   @option params [optional, String] :method (POST) this defines how to send the audio file, either POST or PUT, and only applies to HTTP
+    #   @option params [optional, Integer] :min_confidence (30) the minimum confidence by which to accept the response, as opposed to asking again
+    #   @option params [optional, String] :name this is the key used to identify the result of an operation, so you can differentiate between multiple results
+    #   @option params [optional, Boolean] :required (true) determines whether Tropo should move on to the next verb - if true, Tropo will only move on if the current operation completed
+    #   @option params [optional, Hash] :transcription allows you to submit a recording to be transcribed - takes parameters id, url and emailFormat
+    #   @option params [optional, String] :url the destination URL to send the recording, either via FTP or HTTP
     #   @option params [optional, String] :username if posting to FTP, the username for the FTP server
     #   @option params [optional, String] :password if posting to FTP, the password for the FTP server
-    #   @option params [optional, Hash] :transcription parameters used to transcribe the recording
+    #   @option params [optional, Float] :timeout amount of time Tropo will wait--in seconds and after sending or playing the prompt--for the user to begin a response
     #   @option params [optional, Integer] :interdigit_timeout (nil) defines how long to wait between key presses to determine the user has stopped entering input
     # @overload record(params, &block)
     #   @param [Hash] params the options to create a message with.
     #   @param [Block] takes a block so that you may trigger actions, such as a say, on a specific event
-    #   @option params [String] :name the event name that should trigger the callback
-    #   @option params [String] :url a valid URI, an HTTP, FTP or email address to POST the recording file to
+    #   @option params [optional, Integer] :attempts (1) the number of times to prompt the user for input
+    #   @option params [optional, String or Array] :allow_signals allows you to assign a signal to record which can be used with REST to interrupt the function 
+    #   @option params [optional, Boolean] :bargein (true) allows a user to say or enter a key to stop the prompt from playing further
+    #   @option params [optional, Boolean] :beep (true) when true, callers will hear a tone indicating the recording has begun
+    #   @option params [optional, String] :choices when used with record, this defines the terminator
+    #   @option params [required, String] :say determines what is played or sent to the caller
+    #   @option params [optional, String] :voice (allison) specifies the voice to be used when speaking text to a user
     #   @option params [optional, String] :format (audio/wav) the audio format to record in, either a wav or mp3
+    #   @option params [optional, Float] :max_silence (5.0) the max amount of time in seconds to wait for silence before considering the user finished speaking
+    #   @option params [optional, Float] :max_time (30.0) the max amount of time in seconds the user is allotted for input
+    #   @option params [optional, String] :method (POST) this defines how to send the audio file, either POST or PUT, and only applies to HTTP
+    #   @option params [optional, Integer] :min_confidence (30) the minimum confidence by which to accept the response, as opposed to asking again
+    #   @option params [optional, String] :name this is the key used to identify the result of an operation, so you can differentiate between multiple results
+    #   @option params [optional, Boolean] :required (true) determines whether Tropo should move on to the next verb - if true, Tropo will only move on if the current operation completed
+    #   @option params [optional, Hash] :transcription allows you to submit a recording to be transcribed - takes parameters id, url and emailFormat
+    #   @option params [optional, String] :url the destination URL to send the recording, either via FTP or HTTP
     #   @option params [optional, String] :username if posting to FTP, the username for the FTP server
     #   @option params [optional, String] :password if posting to FTP, the password for the FTP server
-    #   @option params [optional, Hash] :transcription parameters used to transcribe the recording
+    #   @option params [optional, Float] :timeout amount of time Tropo will wait--in seconds and after sending or playing the prompt--for the user to begin a response
     #   @option params [optional, Integer] :interdigit_timeout (nil) defines how long to wait between key presses to determine the user has stopped entering input
     # @option [String, nil] the JSON string to be passed back to Tropo or nil
     #   if the method has been called from inside a block
@@ -350,16 +405,15 @@ module Tropo
     end
     
     ##
-    # The redirect function forwards an incoming call to another destination / phone number before answering it. 
+    # The redirect function forwards an incoming SIP call to another destination before answering it. 
     # The redirect function must be called before answer is called; redirect expects that a call be in the ringing or answering state. 
     # Use transfer when working with active answered calls.
     #
-    #  tel: classic phone number (See RFC 2896), must be proceeded by a + and the country code (ie - +14155551212 for a US #)
-    #  sip: Session Initiation Protocol (SIP) address
     #
     # @param [Hash] params the options to create a message with.
-    # @option params [required, String] :to where to redirect the session to
-    # @option params [optional, String] :from set the from id for the session when redirecting
+    #   @option params [optional, String] :name this is the key used to identify the result of an operation, so you can differentiate between multiple results
+    #   @option params [optional, Boolean] :required (true) determines whether Tropo should move on to the next verb - if true, Tropo will only move on if the current operation completed
+    #   @option params [required, String] :to where to redirect the session to
     # @return [String, nil] the JSON string to redirect the current session or nil
     #   if the method has been called from inside a block
     def redirect(params={})
@@ -406,19 +460,22 @@ module Tropo
     #
     # @overload say(params)
     #   @param [Hash] params the options to create a message with.
-    #   @option params [String] :value the text or audio to be spoken or played back to the user
-    #   @option params [Boolean] :event assigns a callback when a particular event occurs
-    #   @option params [Integer] :as instructs the engine on how to handle the grammar
-    #   @option params [Boolean] :format instructs the engine on how to handle the grammar
-    #   @return [String, nil] the JSON string to be passed back to Tropo or nil
-    #     if the method has been called from inside a block
-    # @overload say(value, params)
-    #   @param [String] the text or audio to be spoken or played back to the user
+    #   @option params [required, String] :value the text or audio to be spoken or played back to the user
+    #   @option params [optional, String] :voice (allison) specifies the voice to be used when speaking text to a user
+    #   @option params [optional, String] :name this is the key used to identify the result of an operation, so you can differentiate between multiple results
+    #   @option params [optional, Boolean] :required (true) determines whether Tropo should move on to the next verb - if true, Tropo will only move on if the current operation completed
+    #   @option params [optional, Integer] :as specifies the type of data being spoken, so the TTS Engine can interpret it correctly. The possible values are "DATE", "DIGITS" and "NUMBER"
+    #   @option params [optional, String or Array] :allow_signals allows you to assign a signal to say which can be used with REST to interrupt the function 
+    # @overload say(params, &block)
     #   @param [Hash] params the options to create a message with.
-    #   @option params [Boolean] :event assigns a callback when a particular event occurs
-    #   @option params [Integer] :as instructs the engine on how to handle the grammar
-    #   @option params [Boolean] :format instructs the engine on how to handle the grammar
-    #   @return [String, nil] the JSON string to be passed back to Tropo or nil
+    #   @param [Block] takes a block so that you may trigger actions, such as a say, on a specific event
+    #   @option params [required, String] :value the text or audio to be spoken or played back to the user
+    #   @option params [optional, String] :voice (allison) specifies the voice to be used when speaking text to a user
+    #   @option params [optional, String] :name this is the key used to identify the result of an operation, so you can differentiate between multiple results
+    #   @option params [optional, Boolean] :required (true) determines whether Tropo should move on to the next verb - if true, Tropo will only move on if the current operation completed
+    #   @option params [optional, Integer] :as specifies the type of data being spoken, so the TTS Engine can interpret it correctly. The possible values are "DATE", "DIGITS" and "NUMBER"
+    #   @option params [optional, String or Array] :allow_signals allows you to assign a signal to say which can be used with REST to interrupt the function 
+    # @return [String, nil] the JSON string to be passed back to Tropo or nil
     #     if the method has been called from inside a block
     def say(value=nil, params={})
       
@@ -464,10 +521,11 @@ module Tropo
     # The resulting recording may then be sent via FTP or an HTTP POST/Multipart Form.
     #
     # @param [Hash] params the options to create a message with.
-    # @option params [String] :url a valid URI, an HTTP, FTP or email address to POST the recording file to
+    # @option params [required, String] :url a valid URI, an HTTP, FTP or email address to POST the recording file to
     # @option params [optional, String] :format (audio/wav) the audio format to record in, either a wav or mp3
     # @option params [optional, String] :username if posting to FTP, the username for the FTP server
     # @option params [optional, String] :password if posting to FTP, the password for the FTP server
+    # @option params [optional, String] :method (POST) defines how to send the audio file - values are POST or PUT and applies only to HTTP
     # @return [String, nil] returns the JSON string to start the recording of a session or nil
     #   if the method has been called from inside a block
     def start_recording(params={})
@@ -512,24 +570,34 @@ module Tropo
     #
     # @overload transfer(params)
     #   @param [Hash] params the options to create a transfer action request with
-    #   @option params [String] :name the name to assign to the result when returned to the application, default is true
-    #   @option params [optional, Boolean] :answer_on_media ???
-    #   @option params [optional, Integer] :answer_timeout the amount of time to ring the far side before giving up and going to the next step
-    #   @option params [optional, Boolean] :required (true) ???
-    #   @option params [required, String] :to where to redirect the session to
+    #   @option params [required, String] :to the new destination for the incoming call as a URL
     #   @option params [optional, String] :from set the from id for the session when redirecting
     #   @option params [optional, Integer] :interdigit_timeout (nil) defines how long to wait between key presses to determine the user has stopped entering input
     #   @option params [optional, Integer] :ring_repeat This specifies the number of times the audio file specified in the ring event will repeat itself.
+    #   @option params [optional, String] :name this is the key used to identify the result of an operation, so you can differentiate between multiple results
+    #   @option params [optional, Boolean] :required (true) determines whether Tropo should move on to the next verb - if true, Tropo will only move on if the current operation completed
+    #   @option params [optional, Float] :timeout amount of time Tropo will wait--in seconds--for the other party to answer the call
+    #   @option params [optional, Integer] :interdigit_timeout (nil) defines how long to wait between key presses to determine the user has stopped entering input
+    #   @option params [optional, String or Array] :allow_signals allows you to assign a signal to record which can be used with REST to interrupt the function 
+    #   @option params [optional, String] :on adds event callback to enable "ring" event, which allows you to play an audio file or say something while the outbound call rings
+    #   @option params [optional, Boolean] :answer_on_media (false) if true, the call will be concisdered answered and audio will being playing as soon as media is received (ringing, busy, etc)
+    #   @options params [optional, Hash] :headers A set of key/values to apply as customer SIP headers to the outgoing call
+    #   @option params [optional, String] :choices when used with transfer, this defines the terminator
     # @overload transfer(params, &block)
     #   @param [Hash] params the options to create a transfer action request with
-    #   @option params [String] :name the name to assign to the result when returned to the application, default is true
-    #   @option params [optional, Boolean] :answer_on_media ???
-    #   @option params [optional, Integer] :answer_timeout the amount of time to ring the far side before giving up and going to the next step
-    #   @option params [optional, Boolean] :required (true) ???
-    #   @option params [required, String] :to where to redirect the session to
+    #   @param [Block] takes a block so that you may trigger actions, such as a say, on a specific event
+    #   @option params [required, String] :to the new destination for the incoming call as a URL
     #   @option params [optional, String] :from set the from id for the session when redirecting
-    #   @option params [optional, Integer] :interdigit_timeout (nil) defines how long to wait between key presses to determine the user has stopped entering input
     #   @option params [optional, Integer] :ring_repeat This specifies the number of times the audio file specified in the ring event will repeat itself.
+    #   @option params [optional, String] :name this is the key used to identify the result of an operation, so you can differentiate between multiple results
+    #   @option params [optional, Boolean] :required (true) determines whether Tropo should move on to the next verb - if true, Tropo will only move on if the current operation completed
+    #   @option params [optional, Float] :timeout amount of time Tropo will wait--in seconds--for the other party to answer the call
+    #   @option params [optional, Integer] :interdigit_timeout (nil) defines how long to wait between key presses to determine the user has stopped entering input
+    #   @option params [optional, String or Array] :allow_signals allows you to assign a signal to record which can be used with REST to interrupt the function 
+    #   @option params [optional, String] :on adds event callback to enable "ring" event, which allows you to play an audio file or say something while the outbound call rings
+    #   @option params [optional, Boolean] :answer_on_media (false) if true, the call will be concisdered answered and audio will being playing as soon as media is received (ringing, busy, etc)
+    #   @options params [optional, Hash] :headers A set of key/values to apply as customer SIP headers to the outgoing call
+    #   @option params [optional, String] :choices when used with transfer, this defines the terminator
     # @return [nil, String]
     def transfer(params={}, &block)
       if block_given?
