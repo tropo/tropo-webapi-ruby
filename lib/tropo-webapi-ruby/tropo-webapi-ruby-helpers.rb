@@ -39,6 +39,8 @@ module Tropo
           return build_elements(params)
         when 'transfer'
           has_params?(params, 'transfer', 'to')
+        when 'wait'
+          has_params?(params, 'wait', 'milliseconds')
         end
 
         if action == 'on'
