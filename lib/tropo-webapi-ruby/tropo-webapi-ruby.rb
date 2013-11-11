@@ -626,5 +626,17 @@ module Tropo
     def voice=(voice)
       @voice = voice
     end
+    
+    def wait(params={}, &block)
+      if block_given?
+        create_nested_hash('wait', params)
+        instance_exec(&block)
+        @response[:tropo] << @nested_hash
+      else
+        hash = build_action('wait', params)
+        @response[:tropo] << hash
+      end
+      render_response if @building.nil?
+    end
   end
 end

@@ -2,6 +2,10 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe "Tropo" do
 
+
+   response = Tropo::Generator.wait({ :milliseconds => 10, :allowSignals => "exit"})
+   puts response
+
   # Ask action tests (and alias Prompt)
   it "should generate a complete 'ask' JSON document" do
     response = Tropo::Generator.ask({ :name    => 'foo',
