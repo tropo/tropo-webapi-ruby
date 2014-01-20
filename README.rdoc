@@ -1,4 +1,5 @@
 = Tropo Web API Ruby Library
+[![Build Status](https://drone.io/github.com/tropo/tropo-webapi-ruby/status.png)](https://drone.io/github.com/tropo/tropo-webapi-ruby/latest)
 
 A Ruby library for interaction with the Tropo Web API (http://tropo.com) using JSON.
 
