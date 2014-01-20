@@ -4,7 +4,6 @@ describe "Tropo" do
 
 
    response = Tropo::Generator.wait({ :milliseconds => 10, :allowSignals => "exit"})
-   puts response
 
   # Ask action tests (and alias Prompt)
   it "should generate a complete 'ask' JSON document" do
