@@ -1,21 +1,21 @@
-= Tropo Web API Ruby Library
+# Tropo Web API Ruby Library
 [![Build Status](https://drone.io/github.com/tropo/tropo-webapi-ruby/status.png)](https://drone.io/github.com/tropo/tropo-webapi-ruby/latest)
 
 A Ruby library for interaction with the Tropo Web API (http://tropo.com) using JSON.
 
-== Tropo Web API Overview
+## Tropo Web API Overview
 
 The Tropo Remote API provides a RESTful JSON API for controlling realtime communications applications from
 your own web servers.
 
-== Requirements
+## Requirements
 
-* Unit tests passed on: Ruby MRI v1.8.6/1.8.7 and JRuby v1.5.0
-* RubyGems
+  * Unit tests passed on: Ruby MRI v1.8.6/1.8.7 and JRuby v1.5.0
+  * RubyGems
 
 Note: If using with ActiveSupport, v2.3.5 or better of ActiveSupport is required.
 
-== Installation
+## Installation
 
   $ sudo gem install tropo-webapi-ruby
 
@@ -23,13 +23,13 @@ Optional, if you would like to use with Sinatra:
 
   $ sudo gem install sinatra
 
-== Generate Documentation
+## Generate Documentation
 
-=== Developer
+### Developer
 
   $ gemserver
 
-=== Project Developer
+### Project Developer
 
   $ sudo gem install yard
 
@@ -37,8 +37,8 @@ From within the project:
 
   $ yardoc
 
-== Usage
-
+## Usage
+```ruby
   require 'rubygems'
   require 'tropo-webapi-ruby'
 
@@ -53,15 +53,15 @@ From within the project:
   response = tropo.parse(json_string)
   p 'Hey, this is a voice session!' if tropo.voice_session
   p 'Hey, this is a text messaging session!' if tropo.text_session
+```
+## Examples
 
-== Examples
-
-=== Sinatra
+### Sinatra
 
 Using the great RESTful Web Services framework Sinatra for Ruby.
 
-==== Hello World
-
+#### Hello World
+```ruby
   require 'rubygems'
   require 'sinatra'
   require 'tropo-webapi-ruby'
@@ -83,9 +83,9 @@ Using the great RESTful Web Services framework Sinatra for Ruby.
     tropo.say 'Hello again.'
     tropo.response
   end
-
-==== Getting Session Information
-
+```
+#### Getting Session Information
+```ruby
   # Produces a Ruby hash:
   #
   # { :session => 
@@ -118,9 +118,9 @@ Using the great RESTful Web Services framework Sinatra for Ruby.
     tropo_session = Tropo::Generator.parse request.env["rack.input"].read
     p tropo_session
   end
-
-==== Asking for input and receiving the response, or catching a hangup
-
+```
+#### Asking for input and receiving the response, or catching a hangup
+```ruby
   post '/ask.json' do
     tropo = Tropo::Generator.new do
               on :event => 'hangup', :next => '/hangup.json'
@@ -171,23 +171,23 @@ Using the great RESTful Web Services framework Sinatra for Ruby.
     tropo_event = Tropo::Generator.parse request.env["rack.input"].read
     p tropo_event
   end
-
-==== Redirect a call before answering
-
+```
+#### Redirect a call before answering
+```ruby
   # A redirect method
   post '/redirect.json' do
     Tropo::Generator.redirect({ :to => 'sip:1234', :from => '4155551212' })
   end
-
-==== Reject a call before answering
-
+```
+#### Reject a call before answering
+```ruby
   # A reject method
   post '/reject.json' do
     Tropo::Generator.reject
   end
-
-==== Setting a default voice for speech synthesis (text-to-speech/TTS)
-
+```
+#### Setting a default voice for speech synthesis (text-to-speech/TTS)
+```ruby
   post '/speak.json' do
     t = Tropo::Generator.new(:voice => 'kate')
     t.say 'Hello!' # Will speak as kate now
@@ -198,9 +198,9 @@ Using the great RESTful Web Services framework Sinatra for Ruby.
     t.voice = 'kate'
     t.say 'Hello!' # Will speak as kate now
   end
-
-==== Setting a default recognizer for speech recognition (ASR)
-
+```
+#### Setting a default recognizer for speech recognition (ASR)
+```ruby
   post '/ask.json' do
     t = Tropo::Generator.new(:recognizer => 'fr-fr')
     t.ask({ :name    => 'account_number', # Will now use the French speech recognition engine
@@ -223,12 +223,12 @@ Using the great RESTful Web Services framework Sinatra for Ruby.
               choices :value => '[5 DIGITS]'
             end
   end
-
-=== Additional Examples
+```
+### Additional Examples
 
 May be found by checking out the project from Github, and then looking in $PROJECT_HOME/examples and $PROJECT_HOME/spec/tropo-webapi-ruby_spec.rb.
 
-=== Documentation
+### Documentation
 
 * API Documentation:
 
@@ -238,12 +238,12 @@ http://voxeo.github.com/tropo-webapi-ruby
 
 http://docs.tropo.com/webapi/2.0/home.htm
 
-== Notes
+## Notes
 
 In order to maintain compatibility between Ruby MRI and JRuby the gem requires 'json_pure'. If you are using the Ruby MRI and would prefer to use the C version of 'json', simply install the 'json' gem as follows:
 
   sudo gem install json
 
-== Copyright
+## Copyright
 
-Copyright (c) 2010 Voxeo, Corporation. See LICENSE for details.
+Copyright (c) 2014 Tropo, Inc. See LICENSE for details.
