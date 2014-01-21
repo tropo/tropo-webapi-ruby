@@ -10,7 +10,7 @@ your own web servers.
 
 ## Requirements
 
-  * Unit tests passed on: Ruby MRI v1.8.6/1.8.7 and JRuby v1.5.0
+  * Unit tests passed on: Ruby MRI v1.8.6/1.8.7/1.9.3/2.1.0 and JRuby v1.5.0/v1.7.9
   * RubyGems
 
 Note: If using with ActiveSupport, v2.3.5 or better of ActiveSupport is required.
