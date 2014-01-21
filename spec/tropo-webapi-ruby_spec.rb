@@ -365,15 +365,6 @@ describe "Tropo" do
     @@new_session.should == 'foobar'
   end
 
-  it "should see an object passed into the block" do
-    session = 'foobar'
-    result = Tropo::Generator.new(session) do
-      session.should == 'foobar'
-      say :value => 'blah'
-      on  :event => 'error', :next => 'error.json'
-    end
-  end
-
   it "should allow you to create a Tropo::Generator object and build up a JSON request with two says" do
     tropo = Tropo::Generator.new
     tropo.say('foo')
