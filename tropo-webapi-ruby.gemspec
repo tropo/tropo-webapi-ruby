@@ -34,6 +34,7 @@ Gem::Specification.new do |s|
     "tropo-webapi-ruby.gemspec"
   ]
   s.homepage = %q{http://tropo.com}
+  s.license = %q{MIT}
   s.require_paths = ["lib"]
   s.required_ruby_version = Gem::Requirement.new(">= 1.8.6")
   s.rubygems_version = %q{1.5.0}
