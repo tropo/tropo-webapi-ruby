@@ -181,7 +181,7 @@ module Tropo
     #   @option params [optional, Boolean] :joinPrompt (false) determines a prompt that plays to all participants of a conference when someone joins the conference
     #   @option params [optional, Boolean] :leavePrompt (false) determines a prompt that plays to all participants of a conference when someone leaves the conference
     #   @option params [optional, Boolean] :mute (false) whether to mute this caller in the conference
-    #   @option params [optional, Integer] :play_tones whether to allow the DTMF input from a user to play into the conference
+    #   @option params [optional, Boolean] :play_tones (false) whether to allow the DTMF input from a user to play into the conference
     #   @option params [optional, String] :terminator this is the touch-tone key (DTMF) used to exit the conference
     #   @option params [optional, Boolean] :required (true) determines whether Tropo should move on to the next verb - if true, Tropo will only move on if the current operation completed
     #   @option params [optional, String or Array] :allow_signals allows you to assign a signal to conference which can be used with REST to interrupt the function 
@@ -194,7 +194,7 @@ module Tropo
     #   @option params [optional, Boolean] :joinPrompt (false) determines a prompt that plays to all participants of a conference when someone joins the conference
     #   @option params [optional, Boolean] :leavePrompt (false) determines a prompt that plays to all participants of a conference when someone leaves the conference
     #   @option params [optional, Boolean] :mute (false) whether to mute this caller in the conference
-    #   @option params [optional, Integer] :play_tones whether to allow the DTMF input from a user to play into the conference
+    #   @option params [optional, Boolean] :play_tones (false) whether to allow the DTMF input from a user to play into the conference
     #   @option params [optional, String] :terminator this is the touch-tone key (DTMF) used to exit the conference
     #   @option params [optional, Boolean] :required (true) determines whether Tropo should move on to the next verb - if true, Tropo will only move on if the current operation completed
     #   @option params [optional, String or Array] :allow_signals allows you to assign a signal to conference which can be used with REST to interrupt the function 
@@ -596,7 +596,7 @@ module Tropo
     #   @option params [optional, Integer] :ring_repeat This specifies the number of times the audio file specified in the ring event will repeat itself.
     #   @option params [optional, String] :name this is the key used to identify the result of an operation, so you can differentiate between multiple results
     #   @option params [optional, Boolean] :required (true) determines whether Tropo should move on to the next verb - if true, Tropo will only move on if the current operation completed
-    #   @option params [optional, Float] :timeout amount of time Tropo will wait--in seconds--for the other party to answer the call
+    #   @option params [optional, Float] :timeout (30) amount of time Tropo will wait--in seconds--for the other party to answer the call
     #   @option params [optional, Integer] :interdigit_timeout (nil) defines how long to wait between key presses to determine the user has stopped entering input
     #   @option params [optional, String or Array] :allow_signals allows you to assign a signal to record which can be used with REST to interrupt the function 
     #   @option params [optional, Boolean] :machineDetection (false) determines if a call is coming from machine or human
@@ -612,7 +612,7 @@ module Tropo
     #   @option params [optional, Integer] :ring_repeat This specifies the number of times the audio file specified in the ring event will repeat itself.
     #   @option params [optional, String] :name this is the key used to identify the result of an operation, so you can differentiate between multiple results
     #   @option params [optional, Boolean] :required (true) determines whether Tropo should move on to the next verb - if true, Tropo will only move on if the current operation completed
-    #   @option params [optional, Float] :timeout amount of time Tropo will wait--in seconds--for the other party to answer the call
+    #   @option params [optional, Float] :timeout (30) amount of time Tropo will wait--in seconds--for the other party to answer the call
     #   @option params [optional, Integer] :interdigit_timeout (nil) defines how long to wait between key presses to determine the user has stopped entering input
     #   @option params [optional, String or Array] :allow_signals allows you to assign a signal to record which can be used with REST to interrupt the function 
     #   @option params [optional, Boolean] :machineDetection (false) determines if a call is coming from machine or human
