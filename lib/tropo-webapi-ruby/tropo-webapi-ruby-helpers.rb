@@ -45,6 +45,8 @@ module Tropo
 
         if action == 'on'
           build_elements(params)
+        elsif action == 'generalLogSecurity'
+          {action => params[:state]}
         else
           { action.to_sym => build_elements(params) }
         end

@@ -343,6 +343,70 @@ module Tropo
 
       transformed_response = Hashie::Mash.new(transformed_response)
     end
+
+    ##
+    #
+    # @param [resultactions]: result object actions
+    # @param [actionName]: action name
+    # @return [String] a String representing the value field 'value' of action named actionName
+    def getValueByActionName(resultactions, actionName)
+      resultactions[actionName]['value']
+    end
+
+    ##
+    #
+    # @param [resultactions]: result object actions
+    # @param [actionName]: action name
+    # @return [String] a String representing the value field 'uploadStatus' of action named actionName
+    def getUploadStatusByActionName(resultactions, actionName)
+      resultactions[actionName]['uploadStatus']
+    end
+    
+    ##
+    #
+    # @param [resultactions]: result object actions
+    # @param [actionName]: action name
+    # @return [String] a String representing the value field 'disposition' of action named actionName
+    def getDispositionByActionName(resultactions, actionName)
+      resultactions[actionName]['disposition']
+    end
+    
+    ##
+    #
+    # @param [resultactions]: result object actions
+    # @param [actionName]: action name
+    # @return [String] a String representing the value field 'interpretation' of action named actionName
+    def getInterpretationByActionName(resultactions, actionName)
+      resultactions[actionName]['interpretation']
+    end
+    
+    ##
+    #
+    # @param [resultactions]: result object actions
+    # @param [actionName]: action name
+    # @return [String] a String representing the value field 'utterance' of action named actionName
+    def getUtteranceByActionName(resultactions, actionName)
+      resultactions[actionName]['utterance']
+    end
+
+    ##
+    #
+    # @param [resultactions]: result object actions
+    # @param [actionName]: action name
+    # @return [String] a String representing the value field 'concept' of action named actionName
+    def getConceptByActionName(resultactions, actionName)
+      resultactions[actionName]['concept']
+    end
+    
+    ##
+    #
+    # @param [resultactions]: result object actions
+    # @param [actionName]: action name
+    # @param [fieldName]: field name
+    # @return [String] a String representing the value field of fieldName of action named actionName
+    def getFieldValueByActionNameFieldName(resultactions, actionName, fieldName)
+      resultactions[actionName][fieldName]
+    end
     
     ##
     # Sets the default recognizer for the object
@@ -660,5 +724,19 @@ module Tropo
       end
       render_response if @building.nil?
     end
+    
+    def generalLogSecurity(params={}, &block)
+      if block_given?
+        create_nested_hash('generalLogSecurity', params)
+        instance_exec(&block)
+        @response[:tropo] << @nested_hash
+      else
+        hash = build_action('generalLogSecurity', params)
+        @response[:tropo] << hash
+      end
+      render_response if @building.nil?
+    end
+    
+    
   end
 end
