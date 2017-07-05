@@ -1,5 +1,5 @@
-#require 'tropo-webapi-ruby'
-require '/Users/xiangjyu/git/tropo-webapi-ruby/lib/tropo-webapi-ruby/tropo-webapi-ruby.rb'
+require 'tropo-webapi-ruby'
+
 require 'sinatra'
 
 post '/index.json' do
@@ -14,7 +14,7 @@ post '/index.json' do
     :transcriptionEmailFormat => "encoded",
     :transcriptionID => "xianggang")
   # [From this point, until stop_recording(), we will record what the caller *and* the IVR say]
-  t.sa505y [:value => "I am now recording!"]
+  t.say [:value => "I am now recording!"]
   # Prompt the user to incriminate themselve on-the-record
   t.stop_recording
   t.response

@@ -1,5 +1,5 @@
-#require 'tropo-webapi-ruby'
-require '/Users/xiangjyu/git/tropo-webapi-ruby/lib/tropo-webapi-ruby/tropo-webapi-ruby.rb'
+require 'tropo-webapi-ruby'
+
 require 'sinatra'
 
 post '/index.json' do
@@ -7,9 +7,9 @@ post '/index.json' do
   t = Tropo::Generator.new
   
   t.generalLogSecurity :state => "suppress"
-  t.sa505y :value => "this is not logged"
+  t.say :value => "this is not logged"
   t.generalLogSecurity :state => "none"
-  t.sa505y :value => "this will be logged"
+  t.say :value => "this will be logged"
       
   
   headers \

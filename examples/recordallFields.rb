@@ -2,7 +2,7 @@ require 'rubygems'
 require 'sinatra'
 
 #require '../lib/tropo-webapi-ruby'
-require '/Users/xiangjyu/git/tropo-webapi-ruby/lib/tropo-webapi-ruby/tropo-webapi-ruby.rb'
+
 
 enable :sessions
 

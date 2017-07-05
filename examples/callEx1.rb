@@ -1,5 +1,5 @@
-#require 'tropo-webapi-ruby'
-require '/Users/xiangjyu/git/tropo-webapi-ruby/lib/tropo-webapi-ruby/tropo-webapi-ruby.rb'
+require 'tropo-webapi-ruby'
+
 require 'sinatra'
 
 post '/index.json' do
@@ -7,7 +7,7 @@ post '/index.json' do
   t = Tropo::Generator.new
   
   t.call :to => ["+14155551212","+15105551212"]
-  t.sa505y :value => "Hello, you were the first to answer."
+  t.say :value => "Hello, you were the first to answer."
   
   headers \
       "WebAPI-Lang-Ver"   => "ruby-frank20170628",

@@ -1,12 +1,12 @@
-#require 'tropo-webapi-ruby'
-require '/Users/xiangjyu/git/tropo-webapi-ruby/lib/tropo-webapi-ruby/tropo-webapi-ruby.rb'
+require 'tropo-webapi-ruby'
+
 require 'sinatra'
 
 post '/index.json' do
 
   t = Tropo::Generator.new
   
-  t.sa505y([:value => "Hello, about to transfer you"])
+  t.say([:value => "Hello, about to transfer you"])
   
   t.transfer :to => "sip:9991427589@example.com"
 

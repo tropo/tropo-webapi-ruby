@@ -1,17 +1,17 @@
-#require 'tropo-webapi-ruby'
-require '/Users/xiangjyu/git/tropo-webapi-ruby/lib/tropo-webapi-ruby/tropo-webapi-ruby.rb'
+require 'tropo-webapi-ruby'
+
 require 'sinatra'
 
 post '/index.json' do
 
   t = Tropo::Generator.new
   
-  t.sa505y :value => "<?xml version='1.0'?><speak><say-as interpret-as=\"vxml:currency\">USD51.33</say-as></speak>"
-  t.sa505y :value => "<?xml version='1.0'?><speak><say-as interpret-as=\"vxml:digits\">20314253</say-as></speak>"
-  t.sa505y :value => "<?xml version='1.0'?><speak><say-as interpret-as=\"vxml:number\">2031.435</say-as></speak>"
-  t.sa505y :value => "<?xml version='1.0'?><speak><say-as interpret-as=\"vxml:phone\">4075551212</say-as></speak>"
-  t.sa505y :value => "<?xml version='1.0'?><speak><say-as interpret-as=\"vxml:date\">20090226</say-as></speak>"
-  t.sa505y :value => "<?xml version='1.0'?><speak><say-as interpret-as=\"vxml:time\">0515a</say-as></speak>"
+  t.say :value => "<?xml version='1.0'?><speak><say-as interpret-as=\"vxml:currency\">USD51.33</say-as></speak>"
+  t.say :value => "<?xml version='1.0'?><speak><say-as interpret-as=\"vxml:digits\">20314253</say-as></speak>"
+  t.say :value => "<?xml version='1.0'?><speak><say-as interpret-as=\"vxml:number\">2031.435</say-as></speak>"
+  t.say :value => "<?xml version='1.0'?><speak><say-as interpret-as=\"vxml:phone\">4075551212</say-as></speak>"
+  t.say :value => "<?xml version='1.0'?><speak><say-as interpret-as=\"vxml:date\">20090226</say-as></speak>"
+  t.say :value => "<?xml version='1.0'?><speak><say-as interpret-as=\"vxml:time\">0515a</say-as></speak>"
       
   
   headers \

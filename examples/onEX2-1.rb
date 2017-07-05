@@ -1,5 +1,5 @@
-#require 'tropo-webapi-ruby'
-require '/Users/xiangjyu/git/tropo-webapi-ruby/lib/tropo-webapi-ruby/tropo-webapi-ruby.rb'
+require 'tropo-webapi-ruby'
+
 require 'sinatra'
 
 post '/index.json' do
@@ -9,7 +9,7 @@ post '/index.json' do
   t.on :event => "exit",
     :next => "exit-say.json"
   
-  t.sa505y :value => "http://phono.com/audio/holdmusic.mp3",
+  t.say :value => "http://phono.com/audio/holdmusic.mp3",
            :allowSignals => "exit"
   
   headers \

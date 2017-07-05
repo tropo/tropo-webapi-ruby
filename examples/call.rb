@@ -1,5 +1,5 @@
-#require 'tropo-webapi-ruby'
-require '/Users/xiangjyu/git/tropo-webapi-ruby/lib/tropo-webapi-ruby/tropo-webapi-ruby.rb'
+require 'tropo-webapi-ruby'
+
 require 'sinatra'
 
 post '/index.json' do
@@ -11,7 +11,7 @@ post '/index.json' do
   t.call :to => ["sip:frank@172.16.22.128:5678","sip:xiangjun_yu@192.168.26.1:5678"],#:promptLogSecurity => "supp5resss",
     :timeout => 21,:machineDetection =>{:introduction=> "i am introduction test",:voice=>"en-us"},
     :headers => "gffdddddddddddddd"
-  t.sa505y :value => "ha h223a ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha haha ha ha ha ha ha ha ha ha ha ha haha ha ha ha ha ha ha ha ha ha ha ha"
+  t.say :value => "ha h223a ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha haha ha ha ha ha ha ha ha ha ha ha haha ha ha ha ha ha ha ha ha ha ha ha"
   
   headers \
       "WebAPI-Lang-Ver"   => "ruby-frank20170628",
