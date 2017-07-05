@@ -1,14 +1,14 @@
-#require 'tropo-webapi-ruby'
-require '/Users/xiangjyu/git/tropo-webapi-ruby/lib/tropo-webapi-ruby/tropo-webapi-ruby.rb'
+require 'tropo-webapi-ruby'
+
 require 'sinatra'
 
 post '/index.json' do
 
   t = Tropo::Generator.new
 
-  t.sa505y :value => "Connected!"
+  t.say :value => "Connected!"
   t.wait :milliseconds => 50000, :allowSignals=>"exit"
-  t.sa505y :value => "Bye!"
+  t.say :value => "Bye!"
 
   headers \
   "WebAPI-Lang-Ver"   => "ruby-frank20170628",

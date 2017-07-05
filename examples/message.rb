@@ -1,12 +1,12 @@
-#require 'tropo-webapi-ruby'
-require '/Users/xiangjyu/git/tropo-webapi-ruby/lib/tropo-webapi-ruby/tropo-webapi-ruby.rb'
+require 'tropo-webapi-ruby'
+
 require 'sinatra'
 
 post '/index.json' do
 
   t = Tropo::Generator.new
   
-  t.sa505y :value => "Success!"
+  t.say :value => "Success!"
       
   t.on :next => "document2.json",
     :event => "continue"

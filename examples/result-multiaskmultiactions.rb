@@ -1,5 +1,5 @@
-#require 'tropo-webapi-ruby'
-require '/Users/xiangjyu/git/tropo-webapi-ruby/lib/tropo-webapi-ruby/tropo-webapi-ruby.rb'
+require 'tropo-webapi-ruby'
+
 require 'sinatra'
 
 post '/index.json' do
@@ -74,32 +74,32 @@ post '/continue.json' do
   yournumuploadStatus = Tropo::Generator.getValueByActionNameKey(actions, 'fivenum', 'uploadStatus')
   
   #yourcolor = v[:result][:actions][:yourcolor]
-  t.sa505y(:value => "color is   #{yourcolorname}")
-  t.sa505y(:value => "color is   #{yourcolorattempts}")
-  t.sa505y(:value => "color is   #{yourcolordisposition}")
-  t.sa505y(:value => "color is   #{yourcolorconfidence}")
-  t.sa505y(:value => "color is   #{yourcolorinterpretation}")
-  t.sa505y(:value => "color is   #{yourcolorutterance}")
-  t.sa505y(:value => "color is   #{yourcolorvalue}")
-  t.sa505y(:value => "color is   #{yourcolorconcept}")
-  t.sa505y(:value => "color is   #{yourcolorxml}")
-  t.sa505y(:value => "color is   #{yourcoloruploadStatus}")
+  t.say(:value => "color is   #{yourcolorname}")
+  t.say(:value => "color is   #{yourcolorattempts}")
+  t.say(:value => "color is   #{yourcolordisposition}")
+  t.say(:value => "color is   #{yourcolorconfidence}")
+  t.say(:value => "color is   #{yourcolorinterpretation}")
+  t.say(:value => "color is   #{yourcolorutterance}")
+  t.say(:value => "color is   #{yourcolorvalue}")
+  t.say(:value => "color is   #{yourcolorconcept}")
+  t.say(:value => "color is   #{yourcolorxml}")
+  t.say(:value => "color is   #{yourcoloruploadStatus}")
   
-  t.sa505y(:value => "account  #{yournumname}")
-  t.sa505y(:value => "account  #{yournumattempts}")
-  t.sa505y(:value => "account  #{yournumdisposition}")
-  t.sa505y(:value => "account  #{yournumconfidence}")
-  t.sa505y(:value => "account  #{yournuminterpretation}")
-  t.sa505y(:value => "account  #{yournumutterance}")
-  t.sa505y(:value => "account  #{yournumvalue}")
-  t.sa505y(:value => "account  #{yournumconcept}")
-  t.sa505y(:value => "account  #{yournumxml}")
-  t.sa505y(:value => "account  #{yournumuploadStatus}")
+  t.say(:value => "account  #{yournumname}")
+  t.say(:value => "account  #{yournumattempts}")
+  t.say(:value => "account  #{yournumdisposition}")
+  t.say(:value => "account  #{yournumconfidence}")
+  t.say(:value => "account  #{yournuminterpretation}")
+  t.say(:value => "account  #{yournumutterance}")
+  t.say(:value => "account  #{yournumvalue}")
+  t.say(:value => "account  #{yournumconcept}")
+  t.say(:value => "account  #{yournumxml}")
+  t.say(:value => "account  #{yournumuploadStatus}")
   
   #yournum = v[:result][:actions][:fivenum]
   #yournum = Tropo::Generator.getValueByActionNameKey(actions, 'fivenum', 'value')
   ##pppppppquts yournum
-  #t.sa505y(:value => "You  said  #{yournum}")
+  #t.say(:value => "You  said  #{yournum}")
   
   t.response
   

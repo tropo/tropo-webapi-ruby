@@ -1,5 +1,5 @@
-#require 'tropo-webapi-ruby'
-require '/Users/xiangjyu/git/tropo-webapi-ruby/lib/tropo-webapi-ruby/tropo-webapi-ruby.rb'
+require 'tropo-webapi-ruby'
+
 require 'sinatra'
 
 post '/index.json' do
@@ -7,7 +7,7 @@ post '/index.json' do
   t = Tropo::Generator.new
 
   t.start_recording :name => 'myrecording', :url => 'http://example.com/getrecord.php'
-  t.sa505y [:value => "I am now recording!"]
+  t.say [:value => "I am now recording!"]
   t.stop_recording
 
   headers \

@@ -1,5 +1,5 @@
-#require 'tropo-webapi-ruby'
-require '/Users/xiangjyu/git/tropo-webapi-ruby/lib/tropo-webapi-ruby/tropo-webapi-ruby.rb'
+require 'tropo-webapi-ruby'
+
 require 'sinatra'
 
 post '/index.json' do
@@ -8,7 +8,7 @@ post '/index.json' do
   
   t.call :to => "+14075550100",
     :network => "SMS"
-  t.sa505y :value => "Tag, you're it!"
+  t.say :value => "Tag, you're it!"
   
   headers \
       "WebAPI-Lang-Ver"   => "ruby-frank20170628",

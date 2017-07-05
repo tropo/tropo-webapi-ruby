@@ -1,12 +1,12 @@
-#require 'tropo-webapi-ruby'
-require '/Users/xiangjyu/git/tropo-webapi-ruby/lib/tropo-webapi-ruby/tropo-webapi-ruby.rb'
+require 'tropo-webapi-ruby'
+
 require 'sinatra'
 
 post '/index.json' do
 
   t = Tropo::Generator.new
     
-    t.sa505y("you are now being transfered")
+    t.say("you are now being transfered")
     
     asksay = {:value=>"Sorry. Please enter you 5 digit account number again.", :event=>"nomatch"},
       {:value=>"Sorry, I did not hear anything.", :event=>"timeout"},
