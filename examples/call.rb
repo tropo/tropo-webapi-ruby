@@ -4,14 +4,23 @@ require 'sinatra'
 
 post '/index.json' do
 
+  
+  v = Tropo::Generator.parse request.env["rack.input"].read
+    
+  aaa = v[:session][:parameters][:yuxiangjun]
+  nnor = v[:session][:parameters][:noww]
+  
   t = Tropo::Generator.new
   
+  puts 'aaa<<<'
+  puts aaa
+  puts 'aaa>>>'
   #t.call :to => "sip:xiangjun_yu@192.168.26.1:5678"
   #t.call :to => "sip:frank@172.16.22.128:5678"
   t.call :to => ["sip:frank@172.16.22.128:5678","sip:xiangjun_yu@192.168.26.1:5678"],#:promptLogSecurity => "supp5resss",
     :timeout => 21,:machineDetection =>{:introduction=> "i am introduction test",:voice=>"en-us"},
     :headers => "gffdddddddddddddd"
-  t.say :value => "ha h223a ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha ha haha ha ha ha ha ha ha ha ha ha ha haha ha ha ha ha ha ha ha ha ha ha ha"
+  t.say :value => "this is ruby webapi call test" + aaa +nnor
   
   headers \
       "WebAPI-Lang-Ver"   => "ruby-frank20170628",
