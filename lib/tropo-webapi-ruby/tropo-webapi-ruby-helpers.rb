@@ -16,7 +16,7 @@ module Tropo
           has_params?(params, 'ask', 'name')
         when 'choices'
           if params[:mode]
-            if params[:mode] != 'dtmf' && params[:mode] != 'speech'
+            if params[:mode] != 'dtmf' && params[:mode] != 'speech' && params[:mode] != 'any'
               raise ArgumentError, "If mode is provided, only 'dtmf', 'speech' or 'any' is supported"
             end
           end
