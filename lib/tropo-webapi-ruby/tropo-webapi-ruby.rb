@@ -576,7 +576,7 @@ module Tropo
       if params.kind_of? Array
         params.each do |param|
           param = set_language(param)
-          hash = build_action('say', param)
+          hash = build_action('nestedSay', param)
           response[:say] << hash
         end
       else
