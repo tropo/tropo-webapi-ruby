@@ -35,6 +35,9 @@ module Tropo
           has_params?(params, 'redirect', 'to')
           raise ArgumentError, "Redirect should only be used alone and before the session is answered, use transfer instead" if @nested_hash
         when 'say'
+          has_params?(params, 'say', ['value', 'name'])
+          return build_elements(params)
+        when 'nestedSay'
           has_params?(params, 'say', 'value')
           return build_elements(params)
         when 'transfer'

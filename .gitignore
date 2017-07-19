@@ -22,3 +22,5 @@ doc
 ## PROJECT::SPECIFIC
 
 *.gem
+/.buildpath
+/.project
