@@ -298,6 +298,8 @@ module Tropo
         instance_exec(&block)
         if @nested_hash
           @nested_hash[@nested_name.to_sym].merge!(@nested_on_hash)
+        else
+          @response[:tropo] << @nested_on_hash
         end
       else
         create_on_hash
@@ -581,7 +583,11 @@ module Tropo
         end
       else
         params = set_language(params)
-        hash = build_action('say', params)
+        if @nested_on_hash
+          hash = build_action('nestedSay', params)
+        else
+          hash = build_action('say', params)
+        end
         response[:say] << hash
       end
       
