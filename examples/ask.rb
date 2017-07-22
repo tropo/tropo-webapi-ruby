@@ -19,7 +19,25 @@ post '/ask.json' do
 
 end
 
-post '/index.json' do
+post '/ask1.json' do
+
+  t = Tropo::Generator.new
+
+  t.ask :name => 'year' do
+    say [{:value => 'Sorry, I did not hear anything.', :event => 'timeout'},
+      {:value => "Don't think that was a year.", :event => 'nomatch:1'},
+      {:value => 'Nope, still not a year.', :event => 'nomatch:2'},
+      {:value => 'What is your birth year?'}]
+    choices :value => '[4 DIGITS]', :mode => 'dtmf'
+  end
+
+  t.on :event => 'continue', :next => '/continue.json'
+
+  t.response
+
+end
+
+post '/ask2.json' do
 
   t = Tropo::Generator.new
 
