@@ -1,35 +1,38 @@
 require 'tropo-webapi-ruby'
-
 require 'sinatra'
 
-post '/index.json' do
+post '/message.json' do
 
   t = Tropo::Generator.new
-  
-  t.say :value => "Success!"
-      
-  t.on :next => "document2.json",
-    :event => "continue"
-  
-  headers \
-      "WebAPI-Lang-Ver"   => "ruby-frank20170628",
-      "rubyversion"   => "ruby 2.4.0p0 (2016-12-24 revision 57164) [x86_64-darwin16]"
-      
-  "This is t.response, where is t.response"
-  t.response # def response  line 464
-    
+
+  t.message :to => 'sip:mac@192.168.26.1:5678',
+  :name => "foo",
+  :say => {:value => 'This is an announcement'}
+
+  t.on :event => "continue", :next => "continue.json"
+
+  t.response
+
 end
 
+post '/message1.json' do
+
+  t = Tropo::Generator.new
+
+  t.message :to => 'sip:mac@192.168.26.1:5678',
+  :name => "foo" do
+    say :value => 'This is an announcement'
+  end
+
+  t.on :event => "continue", :next => "continue.json"
+
+  t.response
+
+end
 
 post '/continue.json' do
-  
+
   v = Tropo::Generator.parse request.env["rack.input"].read
-  t = Tropo::Generator.new
-  #pppppppquts v
-  userType = v[:result][:user_type]
-  #pppppppquts userType
-  t.say(:value => "You are a  #{userType}")
-  
-  t.response
-  
+  puts v
+
 end

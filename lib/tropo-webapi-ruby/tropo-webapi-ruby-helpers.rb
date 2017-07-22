@@ -44,6 +44,8 @@ module Tropo
           has_params?(params, 'transfer', 'to')
         when 'wait'
           has_params?(params, 'wait', 'milliseconds')
+        when 'message'
+          has_params?(params, 'message', ['say', 'to', 'name'])
         end
 
         if action == 'on'

@@ -281,9 +281,13 @@ module Tropo
     #   if the method has been called from inside a block
     def message(params={}, &block)
       if block_given?
-        create_nested_hash('message', params)
+        @nested_hash = {:message => build_elements(params)}
+        @nested_name = 'message'
         instance_exec(&block)
+        has_params?(@nested_hash[:message], 'message', ['say', 'to', 'name'])
         @response[:tropo] << @nested_hash
+        @nested_hash = nil
+        @nested_name = nil
       else
         hash = build_action('message', params)
         @response[:tropo] << hash
@@ -602,7 +606,7 @@ module Tropo
         end
       else
         params = set_language(params)
-        if @on_hash || @ask_hash
+        if @on_hash || @ask_hash || @nested_hash
           hash = build_action('nestedSay', params)
         else
           hash = build_action('say', params)
