@@ -91,12 +91,25 @@ module Tropo
     def ask(params={}, &block)
       params = set_language(params)
       if block_given?
-        create_nested_hash('ask', params)
+        @ask_hash = {:ask => build_elements(params)}
+        #create_nested_hash('ask', params)
         instance_exec(&block)
-        @response[:tropo] << @nested_hash
+        has_params?(@ask_hash[:ask], 'ask', ['choices', 'say'])
+        if @nested_on_hash
+          @nested_on_hash[:on][@nested_on_hash_cnt].merge!(response)
+          @nested_on_hash_cnt += 1
+        else
+          @response[:tropo] << @ask_hash
+          @ask_hash = nil
+        end
       else
-        hash = build_action('ask', params)
-        @response[:tropo] << hash
+        if @nested_on_hash
+          @nested_on_hash[:on][@nested_on_hash_cnt].merge!(response)
+          @nested_on_hash_cnt += 1
+        else
+          hash = build_action('ask', params)
+          @response[:tropo] << hash
+        end
       end
       render_response if @building.nil?
     end
@@ -164,6 +177,8 @@ module Tropo
       
       if @nested_hash
         @nested_hash[@nested_name.to_sym].merge!(hash)
+      elsif @ask_hash
+        @ask_hash[:ask].merge!(hash)
       else
         @response[:tropo] << hash
         render_response if @building.nil?
@@ -294,12 +309,15 @@ module Tropo
     #   if the method has been called from inside a block
     def on(params={}, &block)
       if block_given?
-        create_nested_on_hash(params)
-        instance_exec(&block)
         if @nested_hash
+          create_nested_on_hash(params)
+          instance_exec(&block)
           @nested_hash[@nested_name.to_sym].merge!(@nested_on_hash)
         else
-          @response[:tropo] << @nested_on_hash
+          @on_hash = { :on => build_action('on', params)}
+          instance_exec(&block)
+          @response[:tropo] << @on_hash
+          @on_hash = nil
         end
       else
         create_on_hash
@@ -308,6 +326,7 @@ module Tropo
         if @nested_hash
           @nested_hash[@nested_name.to_sym].merge!(@on_hash)
         else
+          @on_hash = nil
           @response[:tropo] << { :on => hash }
           render_response if @building.nil?
         end
@@ -583,15 +602,19 @@ module Tropo
         end
       else
         params = set_language(params)
-        if @nested_on_hash
+        if @on_hash || @ask_hash
           hash = build_action('nestedSay', params)
         else
           hash = build_action('say', params)
         end
-        response[:say] << hash
+        response = { :say => hash }
       end
       
-      if @nested_hash && @nested_on_hash.nil?
+      if @ask_hash
+        @ask_hash[:ask].merge!(response)
+      elsif @on_hash
+        @on_hash[:on].merge!(response)
+      elsif @nested_hash && @nested_on_hash.nil?
         @nested_hash[@nested_name.to_sym].merge!(response)
       elsif @nested_on_hash
         @nested_on_hash[:on][@nested_on_hash_cnt].merge!(response)

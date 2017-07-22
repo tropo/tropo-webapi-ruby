@@ -1,41 +1,48 @@
 require 'tropo-webapi-ruby'
-
 require 'sinatra'
+
+post '/ask.json' do
+
+  t = Tropo::Generator.new
+
+  t.ask :name => 'five',
+  :say => {:value => 'Please say your account number.'},
+  :choices => {:value => '[5 DIGITS]'}
+
+  t.ask :name => 'one',
+  :say => {:value => 'Please say a digit.'},
+  :choices => {:value => '[1 DIGIT]'}
+
+  t.on :event => 'continue', :next => '/continue.json'
+
+  t.response
+
+end
 
 post '/index.json' do
 
   t = Tropo::Generator.new
-  
-  t.say :value => "Success!",
-    :allowSignals => ["sig1", "sig2"],
-      :as => "DIGITS",
-      :name => "sayname",
-      :required => "true",
-      :voice => "allison",
-      :promptLogSecurity => "none"
-      
-  t.on :next => "document2.json",
-    :event => "continue"
-  
-  headers \
-      "WebAPI-Lang-Ver"   => "ruby-frank20170628",
-      "rubyversion"   => "ruby 2.4.0p0 (2016-12-24 revision 57164) [x86_64-darwin16]"
-      
-  "This is t.response, where is t.response"
-  t.response # def response  line 464
-    
+
+  t.ask :name => 'five' do
+    say :value => 'Please say your account number.'
+    choices :value => '[5 DIGITS]'
+  end
+
+  t.ask :name => 'one' do
+    say :value => 'Please say a digit.'
+    choices :value => '[1 DIGIT]'
+  end
+
+  t.on :event => 'continue', :next => '/continue.json'
+
+  t.response
+
 end
 
-
 post '/continue.json' do
-  
+
   v = Tropo::Generator.parse request.env["rack.input"].read
-  t = Tropo::Generator.new
-  #pppppppquts v
-  userType = v[:result][:user_type]
-  #pppppppquts userType
-  t.say(:value => "You are a  #{userType}")
-  
-  t.response
-  
+
+  puts v
+
 end

@@ -13,7 +13,7 @@ module Tropo
 
         case action
         when 'ask'
-          has_params?(params, 'ask', 'name')
+          has_params?(params, 'ask', ['choices', 'say'])
         when 'choices'
           if params[:mode]
             if params[:mode] != 'dtmf' && params[:mode] != 'speech' && params[:mode] != 'any'
