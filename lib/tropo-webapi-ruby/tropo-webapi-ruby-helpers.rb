@@ -41,7 +41,7 @@ module Tropo
           has_params?(params, 'say', 'value')
           return build_elements(params)
         when 'transfer'
-          has_params?(params, 'transfer', 'to')
+          has_params?(params, 'transfer', ['to', 'name'])
         when 'wait'
           has_params?(params, 'wait', 'milliseconds')
         when 'message'
