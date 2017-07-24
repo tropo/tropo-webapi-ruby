@@ -1,6 +1,4 @@
-#require 'tropo-webapi-ruby'
-#require '/Users/xiangjyu/git/tropo-webapi-ruby/lib/tropo-webapi-ruby.rb'
-require '/Users/xiangjyu/git/tropo-webapi-ruby-master/lib/tropo-webapi-ruby.rb'
+require 'tropo-webapi-ruby'
 
 require 'sinatra'
 
@@ -34,7 +32,7 @@ post '/index.json' do
               say :value => 'Please say your name and hit poun62017072412016d'
             end
             
-  #t.say(:value => "You said 1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111")
+   t.say(:value => "You said 1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111")
    t.on :event => 'error', :next => '/error3.json'  do
               say :value => 'Please say your name and hit poun2017072412017d'
             end
