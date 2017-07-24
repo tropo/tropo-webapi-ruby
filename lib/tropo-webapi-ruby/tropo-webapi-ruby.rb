@@ -528,6 +528,7 @@ module Tropo
         create_nested_hash('record', params)
         instance_exec(&block)
         @response[:tropo] << @nested_hash
+        @nested_hash = nil
       else
         hash = build_action('record', params)
         @response[:tropo] << hash
