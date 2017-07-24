@@ -13,7 +13,7 @@ module Tropo
 
         case action
         when 'ask'
-          has_params?(params, 'ask', 'name')
+          has_params?(params, 'ask', ['choices', 'say'])
         when 'choices'
           if params[:mode]
             if params[:mode] != 'dtmf' && params[:mode] != 'speech' && params[:mode] != 'any'
@@ -35,12 +35,17 @@ module Tropo
           has_params?(params, 'redirect', 'to')
           raise ArgumentError, "Redirect should only be used alone and before the session is answered, use transfer instead" if @nested_hash
         when 'say'
+          has_params?(params, 'say', ['value', 'name'])
+          return build_elements(params)
+        when 'nestedSay'
           has_params?(params, 'say', 'value')
           return build_elements(params)
         when 'transfer'
-          has_params?(params, 'transfer', 'to')
+          has_params?(params, 'transfer', ['to', 'name'])
         when 'wait'
           has_params?(params, 'wait', 'milliseconds')
+        when 'message'
+          has_params?(params, 'message', ['say', 'to', 'name'])
         end
 
         if action == 'on'
