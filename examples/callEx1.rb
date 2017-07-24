@@ -2,12 +2,15 @@ require 'tropo-webapi-ruby'
 
 require 'sinatra'
 
+set :bind => "192.168.26.1"
+set :port => "12457"
+ 
 post '/index.json' do
 
   t = Tropo::Generator.new
   
-  t.call :to => ["+14155551212","+15105551212"]
-  t.say :value => "Hello, you were the first to answer."
+  t.call :to => ["+14155551212","+15105551212"], :name => "geiniyigen"
+  t.say :value => "Hello, you were the first to answer. now is 201707241535", :name => "sayname"
   
   headers \
       "WebAPI-Lang-Ver"   => "ruby-frank20170628",

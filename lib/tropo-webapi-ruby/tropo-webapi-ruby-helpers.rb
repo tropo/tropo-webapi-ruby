@@ -20,6 +20,8 @@ module Tropo
               raise ArgumentError, "If mode is provided, only 'dtmf', 'speech' or 'any' is supported"
             end
           end
+        when 'call'
+          has_params?(params, 'call', ['to', 'name'])
         when 'conference'
           has_params?(params, 'conference', ['name', 'id'])
         when 'on'
