@@ -238,6 +238,8 @@ module Tropo
         create_nested_hash('conference', params)
         instance_exec(&block)
         @response[:tropo] << @nested_hash
+        @nested_hash = nil
+        @nested_name = nil
       else
         hash = build_action('conference', params)
         @response[:tropo] << hash
