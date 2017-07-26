@@ -34,7 +34,7 @@ module Tropo
           # Camelcase this one to be Java friendly
           action = 'startRecording'
         when 'redirect'
-          has_params?(params, 'redirect', 'to')
+          has_params?(params, 'redirect', ['to', 'name'])
           raise ArgumentError, "Redirect should only be used alone and before the session is answered, use transfer instead" if @nested_hash
         when 'say'
           has_params?(params, 'say', ['value', 'name'])
