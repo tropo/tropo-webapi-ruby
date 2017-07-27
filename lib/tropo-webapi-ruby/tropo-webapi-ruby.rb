@@ -55,7 +55,7 @@ module Tropo
     #   @param [Hash] params the options to create an ask action request with.
     #   @option params [required, Object] :choices indicates the structure of the expected data and acceptable modes of input - value, mode, terminator
     #   @option params [required, Object] :say determines what is played or sent to the caller - also takes an event key to determine if prompt will be played based on a nomatch or timeout
-    #   @option params [optional, String or Array] :allow_signals allows you to assign a signal to ask which can be used with REST to interrupt the function 
+    #   @option params [optional, String or Array] :allowSignals allows you to assign a signal to ask which can be used with REST to interrupt the function 
     #   @option params [optional, String] :name this is the key used to identify the result of an operation, so you can differentiate between multiple results
     #   @option params [optional, Integer] :attempts (1) the number of times to prompt the user for input
     #   @option params [optional, Boolean] :bargein (true) allows a user to say or enter a key to stop the prompt from playing further
@@ -76,7 +76,7 @@ module Tropo
     #   @param [Block] takes a block so that you may trigger actions, such as a say, on a specific event
     #   @option params [required, Object] :choices indicates the structure of the expected data and acceptable modes of input - value, mode, terminator
     #   @option params [required, Object] :say determines what is played or sent to the caller - also takes an event key to determine if prompt will be played based on a nomatch or timeout
-    #   @option params [optional, String or Array] :allow_signals allows you to assign a signal to ask which can be used with REST to interrupt the function
+    #   @option params [optional, String or Array] :allowSignals allows you to assign a signal to ask which can be used with REST to interrupt the function
     #   @option params [optional, String] :name this is the key used to identify the result of an operation, so you can differentiate between multiple results
     #   @option params [optional, Integer] :attempts (1) the number of times to prompt the user for input
     #   @option params [optional, Boolean] :bargein (true) allows a user to say or enter a key to stop the prompt from playing further
@@ -148,11 +148,11 @@ module Tropo
     #   @option params [optional, String] :network which network the call will be initiated with, such as SMS
     #   @option params [optional, String] :channel the channel the call will be initiated over, may be TEXT or VOICE
     #   @option params [optional, Float] :timeout (30) the amount of time, in seconds, to wait for a response before moving on
-    #   @option params [optional, Boolean] :answer_on_media (false) if true, the call will be concisdered answered and audio will being playing as soon as media is received (ringing, busy, etc)
+    #   @option params [optional, Boolean] :answerOnMedia (false) if true, the call will be concisdered answered and audio will being playing as soon as media is received (ringing, busy, etc)
     #   @option params [optional, Hash] :headers A set of key/values to apply as customer SIP headers to the outgoing call
     #   @option params [optional, Boolean or Hash] :machineDetection (false) determines if a call is coming from machine or human
     #   @option params [optional, Boolean] :required (true) determines whether Tropo should move on to the next verb - if true, Tropo will only move on if the current operation completed
-    #   @option params [optional, String or Array] :allow_signals allows you to assign a signal to call which can be used with REST to interrupt the function 
+    #   @option params [optional, String or Array] :allowSignals allows you to assign a signal to call which can be used with REST to interrupt the function 
     #   @option params [optional, String] :voice ""(undefined) sets the voice in a call; all prompt action within the call will inherit the same voice defined here
     #   @option params [optional, String] :callbackUrl Configures a URL for a webhook for CDRs to be sent at the completion of the call.
     #   @option params [optional, String] :promptLogSecurity Controls whether Tropo logs the text to speech string used by the method.
@@ -166,11 +166,11 @@ module Tropo
     #   @option params [optional, String] :network which network the call will be initiated with, such as SMS
     #   @option params [optional, String] :channel (voice) the channel the call will be initiated over, may be TEXT or VOICE
     #   @option params [optional, Float] :timeout (30) the amount of time, in seconds, to wait for a response before moving on
-    #   @option params [optional, Boolean] :answer_on_media (false) if true, the call will be concisdered answered and audio will being playing as soon as media is received (ringing, busy, etc)
+    #   @option params [optional, Boolean] :answerOnMedia (false) if true, the call will be concisdered answered and audio will being playing as soon as media is received (ringing, busy, etc)
     #   @option params [optional, Hash] :headers A set of key/values to apply as customer SIP headers to the outgoing call
     #   @option params [optional, Boolean or Hash] :machineDetection (false) determines if a call is coming from machine or human
     #   @option params [optional, Boolean] :required (true) determines whether Tropo should move on to the next verb - if true, Tropo will only move on if the current operation completed
-    #   @option params [optional, String or Array] :allow_signals allows you to assign a signal to call which can be used with REST to interrupt the function 
+    #   @option params [optional, String or Array] :allowSignals allows you to assign a signal to call which can be used with REST to interrupt the function 
     #   @option params [optional, String] :voice ""(undefined) sets the voice in a call; all prompt action within the call will inherit the same voice defined here
     #   @option params [optional, String] :callbackUrl Configures a URL for a webhook for CDRs to be sent at the completion of the call.
     #   @option params [optional, String] :promptLogSecurity Controls whether Tropo logs the text to speech string used by the method.
@@ -227,7 +227,7 @@ module Tropo
     #   @option params [optional, Boolean] :playTones (false) whether to allow the DTMF input from a user to play into the conference
     #   @option params [optional, String] :terminator this is the touch-tone key (DTMF) used to exit the conference
     #   @option params [optional, Boolean] :required (true) determines whether Tropo should move on to the next verb - if true, Tropo will only move on if the current operation completed
-    #   @option params [optional, String or Array] :allow_signals allows you to assign a signal to conference which can be used with REST to interrupt the function 
+    #   @option params [optional, String or Array] :allowSignals allows you to assign a signal to conference which can be used with REST to interrupt the function 
     #   @option params [optional, String] :promptLogSecurity Controls whether Tropo logs the text to speech string used by the method.
     # @overload conference(params, &block)
     #   @param [Hash] params the options to create a conference with.
@@ -241,7 +241,7 @@ module Tropo
     #   @option params [optional, Boolean] :playTones (false) whether to allow the DTMF input from a user to play into the conference
     #   @option params [optional, String] :terminator this is the touch-tone key (DTMF) used to exit the conference
     #   @option params [optional, Boolean] :required (true) determines whether Tropo should move on to the next verb - if true, Tropo will only move on if the current operation completed
-    #   @option params [optional, String or Array] :allow_signals allows you to assign a signal to conference which can be used with REST to interrupt the function 
+    #   @option params [optional, String or Array] :allowSignals allows you to assign a signal to conference which can be used with REST to interrupt the function 
     #   @option params [optional, String] :promptLogSecurity Controls whether Tropo logs the text to speech string used by the method.
     # @return [String, nil] the JSON string to be passed back to Tropo or nil
     #   if the method has been called from inside a block
@@ -288,7 +288,7 @@ module Tropo
     #   @option params [optional, String] :channel (VOICE) the channel the call will be initiated over, may be TEXT or VOICE
     #   @option params [optional, Float] :timeout (30) the amount of time, in seconds, to wait for a response before moving on
     #   @option params [optional, Boolean] :required (true) determines whether Tropo should move on to the next verb - if true, Tropo will only move on if the current operation completed
-    #   @option params [optional, Boolean] :answer_on_media (false) if true, the call will be concisdered answered and audio will being playing as soon as media is received (ringing, busy, etc)
+    #   @option params [optional, Boolean] :answerOnMedia (false) if true, the call will be concisdered answered and audio will being playing as soon as media is received (ringing, busy, etc)
     #   @option params [optional, String] :promptLogSecurity Controls whether Tropo logs the text to speech string used by the method. Possible values are "none" (the default) and "suppress", which disables output logging for this method. 
     # @overload message(params, &block)
     #   @param [Hash] params the options to create an message action request with.
@@ -302,7 +302,7 @@ module Tropo
     #   @option params [optional, String] :channel (VOICE) the channel the call will be initiated over, may be TEXT or VOICE
     #   @option params [optional, Float] :timeout (30) the amount of time, in seconds, to wait for a response before moving on
     #   @option params [optional, Boolean] :required (true) determines whether Tropo should move on to the next verb - if true, Tropo will only move on if the current operation completed
-    #   @option params [optional, Boolean] :answer_on_media (false) if true, the call will be concisdered answered and audio will being playing as soon as media is received (ringing, busy, etc)
+    #   @option params [optional, Boolean] :answerOnMedia (false) if true, the call will be concisdered answered and audio will being playing as soon as media is received (ringing, busy, etc)
     #   @option params [optional, String] :promptLogSecurity Controls whether Tropo logs the text to speech string used by the method. Possible values are "none" (the default) and "suppress", which disables output logging for this method. 
     # @return [String, nil] the JSON string to be passed back to Tropo or nil
     #   if the method has been called from inside a block
@@ -491,7 +491,7 @@ module Tropo
     #   @param [Hash] params the options to create a message with.
     #   @option params [optional, Integer] :attempts (1) the number of times to prompt the user for input
     #   @option params [optional, Boolean] :asyncUpload (false) instruct Tropo to upload the recording file in the background as soon as the recording is completed
-    #   @option params [optional, String or Array] :allow_signals allows you to assign a signal to record which can be used with REST to interrupt the function 
+    #   @option params [optional, String or Array] :allowSignals allows you to assign a signal to record which can be used with REST to interrupt the function 
     #   @option params [optional, Boolean] :bargein (true) allows a user to say or enter a key to stop the prompt from playing further
     #   @option params [optional, Boolean] :beep (true) when true, callers will hear a tone indicating the recording has begun
     #   @option params [optional, Object] :choices when used with record, this defines the terminator
@@ -501,7 +501,6 @@ module Tropo
     #   @option params [optional, Float] :maxSilence (5.0) the max amount of time in seconds to wait for silence before considering the user finished speaking
     #   @option params [optional, Float] :maxTime (30.0) the max amount of time in seconds the user is allotted for input
     #   @option params [optional, String] :method (POST) this defines how to send the audio file, either POST or PUT, and only applies to HTTP
-    #   @option params [optional, Integer] :min_confidence (30) the minimum confidence by which to accept the response, as opposed to asking again
     #   @option params [required, String] :name this is the key used to identify the result of an operation, so you can differentiate between multiple results
     #   @option params [optional, Boolean] :required (true) determines whether Tropo should move on to the next verb - if true, Tropo will only move on if the current operation completed
     #   @option params [optional, Array or Object] :transcription allows you to submit a recording to be transcribed - takes parameters id, url and emailFormat
@@ -516,7 +515,7 @@ module Tropo
     #   @param [Block] takes a block so that you may trigger actions, such as a say, on a specific event
     #   @option params [optional, Integer] :attempts (1) the number of times to prompt the user for input
     #   @option params [optional, Boolean] :asyncUpload (false) instruct Tropo to upload the recording file in the background as soon as the recording is completed
-    #   @option params [optional, String or Array] :allow_signals allows you to assign a signal to record which can be used with REST to interrupt the function
+    #   @option params [optional, String or Array] :allowSignals allows you to assign a signal to record which can be used with REST to interrupt the function
     #   @option params [optional, Boolean] :bargein (true) allows a user to say or enter a key to stop the prompt from playing further
     #   @option params [optional, Boolean] :beep (true) when true, callers will hear a tone indicating the recording has begun
     #   @option params [optional, Object] :choices when used with record, this defines the terminator
@@ -526,7 +525,6 @@ module Tropo
     #   @option params [optional, Float] :maxSilence (5.0) the max amount of time in seconds to wait for silence before considering the user finished speaking
     #   @option params [optional, Float] :maxTime (30.0) the max amount of time in seconds the user is allotted for input
     #   @option params [optional, String] :method (POST) this defines how to send the audio file, either POST or PUT, and only applies to HTTP
-    #   @option params [optional, Integer] :min_confidence (30) the minimum confidence by which to accept the response, as opposed to asking again
     #   @option params [required, String] :name this is the key used to identify the result of an operation, so you can differentiate between multiple results
     #   @option params [optional, Boolean] :required (true) determines whether Tropo should move on to the next verb - if true, Tropo will only move on if the current operation completed
     #   @option params [optional, Array or Object] :transcription allows you to submit a recording to be transcribed - takes parameters id, url and emailFormat
@@ -753,7 +751,6 @@ module Tropo
     #   @param [Hash] params the options to create a transfer action request with
     #   @option params [required, String or Array] :to the new destination for the incoming call as a URL
     #   @option params [optional, String] :from set the from id for the session when redirecting
-    #   @option params [optional, Integer] :interdigit_timeout (nil) defines how long to wait between key presses to determine the user has stopped entering input
     #   @option params [optional, Integer] :ringRepeat (1) This specifies the number of times the audio file specified in the ring event will repeat itself.
     #   @option params [required, String] :name this is the key used to identify the result of an operation, so you can differentiate between multiple results
     #   @option params [optional, Boolean] :required (true) determines whether Tropo should move on to the next verb - if true, Tropo will only move on if the current operation completed
