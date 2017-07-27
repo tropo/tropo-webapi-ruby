@@ -822,11 +822,11 @@ module Tropo
     ##
     # The wait function suspends the script's current thread of execution for the specified length of time, or until the active session changes state (such as a user hanging up), whichever occurs first. 
     #
-    # @overload generalLogSecurity(params)
+    # @overload wait(params)
     #   @param [Hash] params the options to create a message with.
     #   @option params [optional, String or Array] :allowSignals This parameter allows you to assign a signal to this function.
     #   @option params [required, Integer] :milliseconds This defines the time to wait for a state change. Defaults to 0ms if the parameter is skipped.
-    # @overload generalLogSecurity(params, &block)
+    # @overload wait(params, &block)
     #   @param [Hash] params the options to create a message with.
     #   @param [Block] takes a block so that you may trigger actions, such as a say, on a specific event
     #   @option params [optional, String or Array] :allowSignals This parameter allows you to assign a signal to this function.
