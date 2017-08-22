@@ -1,10 +1,12 @@
 require 'rubygems'
 require 'sinatra'
 
-#require '../lib/tropo-webapi-ruby'
-
+require 'lib/tropo-webapi-ruby'
 
 enable :sessions
+
+set :bind => "192.168.26.1"
+set :port => "4567"
 
 post '/record.json' do
   response = Tropo::Generator.record({ :attempts=> 3,
@@ -17,20 +19,22 @@ post '/record.json' do
     :format       => 'audio/wav',
     :maxSilence       => 5.1,
     :maxTime       => 30.2,
-    :maxSilence       => 5.1,
     :method       => "POST",
     :name       => 'foo',
     :required       => false,
     :transcription        => {
-    :id=>"1234",
-    :url=>"mailto:you@yourmail.com"},
+                      :id=>"1234",
+                      :language=>"British",
+                      :url=>"mailto:you@yourmail.com"
+                      },
     :url        => 'http://example.com/tropo.php',
     :password       => 'foopassword',
     :username       => 'foousername',
     :timeout       => 5.1,
     :interdigitTimeout       => 30.2,
     :voice       => 'allison',
-    :promptLogSecurity       => 'none'
+    :promptLogSecurity       => 'none',
+    :sensitivity => 3.21
   })
   p response
   response
