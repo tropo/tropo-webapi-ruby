@@ -20,6 +20,8 @@ module Tropo
               raise ArgumentError, "If mode is provided, only 'dtmf', 'speech' or 'any' is supported"
             end
           end
+        when 'call'
+          has_params?(params, 'call', ['to', 'name'])
         when 'conference'
           has_params?(params, 'conference', ['name', 'id'])
         when 'on'
@@ -32,7 +34,7 @@ module Tropo
           # Camelcase this one to be Java friendly
           action = 'startRecording'
         when 'redirect'
-          has_params?(params, 'redirect', 'to')
+          has_params?(params, 'redirect', ['to', 'name'])
           raise ArgumentError, "Redirect should only be used alone and before the session is answered, use transfer instead" if @nested_hash
         when 'say'
           has_params?(params, 'say', ['value', 'name'])
