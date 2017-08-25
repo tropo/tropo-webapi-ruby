@@ -138,6 +138,33 @@ module Tropo
     alias :prompt :ask
     
     ##
+    # Prompts initiates a new answer.
+    #
+    # @overload answer(params)
+    #   @param [Hash] params the options to create a answer action request with.
+    #   @option params [optional, Hash] :headers A set of key/values 
+    # @overload answer(params, &block)
+    #   @param [Hash] params the options to create an answer action request with.
+    #   @param [Block] takes a block so that you may trigger actions, such as a say, on a specific event
+    #   @option params [optional, Hash] :headers A set of key/values 
+    # @return [String, nil] the JSON string to be passed back to Tropo or nil
+    #   if the method has been called from inside a block
+    def answer(params={}, &block)
+      if block_given?
+        create_nested_hash('answer', params)
+        instance_exec(&block)
+        @response[:tropo] << @nested_hash
+        @nested_hash = nil
+        @nested_name = nil
+      else
+        hash = build_action('answer', params)
+        @response[:tropo] << hash
+      end
+      render_response if @building.nil?
+    end
+    
+    
+    ##
     # Prompts initiates a new call. May only be used when no call is active.
     #
     # @overload call(params)
