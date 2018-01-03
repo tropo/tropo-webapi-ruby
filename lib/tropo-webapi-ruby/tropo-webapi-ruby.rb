@@ -565,8 +565,10 @@ module Tropo
     #   if the method has been called from inside a block
     def record(params={}, &block)
       if block_given?
-        create_nested_hash('record', params)
+        @nested_hash = {:record => build_elements(params)}
+        @nested_name = 'record'
         instance_exec(&block)
+        has_params?(@nested_hash[:record], 'record', ['url'])
         @response[:tropo] << @nested_hash
         @nested_hash = nil
         @nested_name = nil

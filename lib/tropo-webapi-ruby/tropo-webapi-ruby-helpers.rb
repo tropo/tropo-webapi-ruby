@@ -27,7 +27,7 @@ module Tropo
         when 'on'
           has_params?(params, 'on', 'event')
         when 'record'
-          has_params?(params, 'record', ['name', 'url'])
+          has_params?(params, 'record', ['url'])
         when 'start_recording'
           has_params?(params, 'start_recording', ['url'])
 
@@ -126,12 +126,36 @@ module Tropo
       # @return [Hash] returns the elements properly formatted in a hash
       def build_elements(params)
         if params[:url]
-          uri = URI.parse params[:url]
-          # Check to see if it is a valid http address
-          if uri.class != URI::HTTP
-            # Check to see if it is a valid email address
-            if params[:url].match(/^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$/) == false
-              raise ArgumentError, "The 'url' paramater must be a valid URL"
+          if params[:url].is_a? Array
+            for i in params[:url] do  
+              uri = URI.parse i[:url]
+              # Check to see if it is a valid http address
+              if uri.class != URI::HTTP
+                # Check to see if it is a valid email address
+                if params[:url].match(/^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$/) == false
+                  raise ArgumentError, "The 'url' paramater must be a valid URL"
+                end
+              end
+            end
+          elsif params[:url].nil?
+            if params[:url][:url].nil?
+              uri = URI.parse params[:url][:url]
+              # Check to see if it is a valid http address
+              if uri.class != URI::HTTP
+                # Check to see if it is a valid email address
+                if params[:url].match(/^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$/) == false
+                  raise ArgumentError, "The 'url' paramater must be a valid URL"
+                end
+              end
+            else
+              uri = URI.parse params[:url]
+              # Check to see if it is a valid http address
+              if uri.class != URI::HTTP
+                # Check to see if it is a valid email address
+                if params[:url].match(/^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$/) == false
+                  raise ArgumentError, "The 'url' paramater must be a valid URL"
+                end
+              end
             end
           end
         end
