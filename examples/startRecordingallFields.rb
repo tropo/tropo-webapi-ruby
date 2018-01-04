@@ -1,18 +1,19 @@
 require 'tropo-webapi-ruby'
-
 require 'sinatra'
 
 post '/index.json' do
   t = Tropo::Generator.new
-  t.start_recording(:asyncUpload => true,
+  t.start_recording :asyncUpload => false,
     :format => 'audio/wav',
-    :method => 'POST',
-    :url => "http://example.com/getrecord.php",
-    :username => "gousheng",
-    :password => "goudan",
-    :transcriptionOutURI => "http://example.com/getrecord.php",
-    :transcriptionEmailFormat => "encoded",
-    :transcriptionID => "xianggang")
+    :transcriptionID => '1234',
+    :transcriptionEmailFormat => 'plain',
+    :transcriptionOutURI => 'yourmail@cisco.com',
+    :transcriptionLanguage => 'pt-br',
+    :url => {:url => 'http://192.168.26.204/tropo-webapi-php/upload1_file.php.',
+      :username => 'root',
+      :password => '111111',
+      :methed => 'POST'
+      }
   # [From this point, until stop_recording(), we will record what the caller *and* the IVR say]
   t.say [:value => "I am now recording!"]
   # Prompt the user to incriminate themselve on-the-record
