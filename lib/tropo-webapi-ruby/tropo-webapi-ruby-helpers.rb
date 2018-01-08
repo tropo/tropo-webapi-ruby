@@ -21,9 +21,9 @@ module Tropo
             end
           end
         when 'call'
-          has_params?(params, 'call', ['to', 'name'])
+          has_params?(params, 'call', ['to'])
         when 'conference'
-          has_params?(params, 'conference', ['name', 'id'])
+          has_params?(params, 'conference', ['id'])
         when 'on'
           has_params?(params, 'on', 'event')
         when 'record'
@@ -34,20 +34,20 @@ module Tropo
           # Camelcase this one to be Java friendly
           action = 'startRecording'
         when 'redirect'
-          has_params?(params, 'redirect', ['to', 'name'])
+          has_params?(params, 'redirect', ['to'])
           raise ArgumentError, "Redirect should only be used alone and before the session is answered, use transfer instead" if @nested_hash
         when 'say'
-          has_params?(params, 'say', ['value', 'name'])
+          has_params?(params, 'say', ['value'])
           return build_elements(params)
         when 'nestedSay'
           has_params?(params, 'say', 'value')
           return build_elements(params)
         when 'transfer'
-          has_params?(params, 'transfer', ['to', 'name'])
+          has_params?(params, 'transfer', ['to'])
         when 'wait'
           has_params?(params, 'wait', 'milliseconds')
         when 'message'
-          has_params?(params, 'message', ['say', 'to', 'name'])
+          has_params?(params, 'message', ['say', 'to'])
         end
 
         if action == 'on'
