@@ -4,23 +4,21 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{tropo-webapi-ruby}
-  s.version = "0.1.12"
+  s.name = %q{tropo-webapi-sdk-ruby}
+  s.version = "15.11.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Jason Goecke"]
-  s.date = %q{2011-06-24}
+  s.authors = ["Frank Yu"]
+  s.date = %q{2018-05-17}
   s.description = %q{Ruby library for interacting with the Tropo Web API via REST & JSON}
-  s.email = %q{jsgoecke@voxeo.com}
+  s.email = %q{xiangjyu@cisco.com}
   s.extra_rdoc_files = [
-    "LICENSE",
-    "README.rdoc"
+    "LICENSE"
   ]
   s.files = [
     ".document",
-    "HISTORY.rdoc",
     "LICENSE",
-    "README.rdoc",
+    "README.md",
     "Rakefile",
     "VERSION",
     "examples/sinatra_server.rb",
