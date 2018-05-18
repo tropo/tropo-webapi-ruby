@@ -1,3 +1,11 @@
+[![RubyGems downloads (tropo-webapi-ruby)](https://img.shields.io/gem/v/tropo-webapi-sdk-ruby.svg?style=for-the-badge)](https://rubygems.org/gems/tropo-webapi-sdk-ruby/)
+[![RubyGems version (tropo-webapi-ruby)](https://img.shields.io/gem/dv/tropo-webapi-sdk-ruby/stable.svg?style=flat-square)](https://rubygems.org/gems/tropo-webapi-sdk-ruby/)
+[![RubyGems version (tropo-webapi-ruby)](https://img.shields.io/gem/dv/tropo-webapi-sdk-ruby/15.11.0.svg?style=flat-square)](https://rubygems.org/gems/tropo-webapi-sdk-ruby/)
+[![RubyGems version (tropo-webapi-ruby)](https://img.shields.io/gem/dtv/tropo-webapi-sdk-ruby.svg?style=flat-square)](https://rubygems.org/gems/tropo-webapi-sdk-ruby/)
+[![RubyGems version (tropo-webapi-ruby)](https://img.shields.io/gem/dt/tropo-webapi-sdk-ruby.svg?style=flat-square)](https://rubygems.org/gems/tropo-webapi-sdk-ruby/)
+[![GitHub license](https://img.shields.io/github/license/tropo/tropo-webapi-ruby.svg?style=flat-square)](https://github.com/tropo/tropo-webapi-ruby/blob/master/LICENSE)
+
+
 # Tropo Web API Ruby Library
 [![Build Status](https://drone.io/github.com/tropo/tropo-webapi-ruby/status.png)](https://drone.io/github.com/tropo/tropo-webapi-ruby/latest)
 
@@ -17,7 +25,7 @@ Note: If using with ActiveSupport, v2.3.5 or better of ActiveSupport is required
 
 ## Installation
 
-  $ sudo gem install tropo-webapi-ruby
+  [![RubyGems downloads (tropo-webapi-ruby)](https://img.shields.io/gem/v/tropo-webapi-sdk-ruby.svg?style=for-the-badge)](https://rubygems.org/gems/tropo-webapi-sdk-ruby/)
 
 Optional, if you would like to use with Sinatra:
 
